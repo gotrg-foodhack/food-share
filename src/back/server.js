@@ -11,6 +11,7 @@ import express from 'express'
 import * as actions from '../actions'
 import type { State } from '../front/store/reducers'
 import connect from './mongo'
+import User from './models/User'
 
 connect()
   .then(() => console.log('MongoDb connected'))
@@ -27,17 +28,30 @@ const io = socketIO(server, {
 })
 
 const staticPath = resolve(__dirname, '../../build/front')
+const socketPool = new WeakMap()
 
 app.use(express.static(staticPath))
 
 type CreateListener = (
   dispatch: <A: actions.Action>(action: A) => A,
+  socket: Object,
 ) => (action: actions.Action, state: State) => Promise<void>
 
-const createListener: CreateListener = () => async action => {
+const createListener: CreateListener = (dispatch, socket) => async action => {
   switch (action.type) {
     case 'login': {
-      // do anything
+      const { id, username, password } = await User.findOneAndUpdate(
+        { username: action.payload.username },
+        {
+          username: action.payload.username,
+          password: action.payload.password,
+        },
+        { upsert: true },
+      ).exec()
+
+      socketPool.set(socket, { id, username, password })
+
+      dispatch(actions.loginSuccess({ id, username }))
     }
   }
 }
@@ -48,7 +62,8 @@ io.on('connection', socket => {
     return action
   }
 
-  socket.on('action', createListener(dispatch))
+  socket.on('action', createListener(dispatch, socket))
+  socket.on('action', console.log)
 })
 
 server.listen(PORT)
