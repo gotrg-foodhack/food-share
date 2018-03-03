@@ -33,6 +33,21 @@ export const getMyOrder: (state: State) => * = compose(
   }),
 )
 
+export const getMyOrderMembers: (state: State) => * = compose(
+  order => order && order.members,
+  getMyOrder,
+)
+
+export const getMyOrderCartItems: (state: State) => * = compose(
+  order => order && order.cartItems,
+  getMyOrder,
+)
+
+export const getMyOrderChat: (state: State) => * = compose(
+  order => order && order.chat,
+  getMyOrder,
+)
+
 export const haveActiveOrder: (state: State) => * = compose(Boolean, getMyOrder)
 
 export const getMyOrderId: (state: State) => * = compose(
