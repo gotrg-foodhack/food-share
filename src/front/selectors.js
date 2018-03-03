@@ -25,6 +25,8 @@ export const getMyOrder: (state: State) => * = compose(
   }),
 )
 
+export const haveActiveOrder: (state: State) => * = compose(Boolean, getMyOrder)
+
 export const getMyOrderId: (state: State) => * = compose(
   order => order && order.id,
   getMyOrder,
