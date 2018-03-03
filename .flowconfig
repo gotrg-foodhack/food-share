@@ -1,6 +1,8 @@
 [ignore]
 <PROJECT_ROOT>/node_modules/jsonlint-lines-primitives
 <PROJECT_ROOT>/node_modules/material-ui/test-utils
+<PROJECT_ROOT>/node_modules/mapbox-gl/src/data/array_types.js
+<PROJECT_ROOT>/mongo
 
 [include]
 
