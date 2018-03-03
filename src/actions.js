@@ -36,37 +36,34 @@ export const socketDisconnect = (): SocketDisconnect => ({
   type: 'socket disconnect',
 })
 
-export type Coords = {
-  longitude: number,
-  latitude: number,
-}
-
 export type UpdateSelfPosition = {
   type: 'update self position',
-  payload: Coords,
+  payload: types.Coords,
 }
 
-export const updateSelfPosition = (payload: Coords): UpdateSelfPosition => ({
+export const updateSelfPosition = (
+  payload: types.Coords,
+): UpdateSelfPosition => ({
   type: 'update self position',
   payload,
 })
 
 export type SetMapCenter = {
   type: 'set map center',
-  payload: Coords,
+  payload: types.Coords,
 }
 
-export const setMapCenter = (payload: Coords): SetMapCenter => ({
+export const setMapCenter = (payload: types.Coords): SetMapCenter => ({
   type: 'set map center',
   payload,
 })
 
 export type CreateOrder = {
   type: 'create order',
-  payload: Coords,
+  payload: types.Coords,
 }
 
-export const createOrder = (payload: Coords): CreateOrder => ({
+export const createOrder = (payload: types.Coords): CreateOrder => ({
   type: 'create order',
   payload,
 })

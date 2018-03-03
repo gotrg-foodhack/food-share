@@ -1,5 +1,10 @@
 /* @flow */
 
+export type Coords = {
+  longitude: number,
+  latitude: number,
+}
+
 export type Order = {
   id: string,
   owner: string, // User.id
