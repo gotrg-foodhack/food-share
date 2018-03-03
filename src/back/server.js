@@ -56,14 +56,21 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
   try {
     switch (action.type) {
       case 'login': {
-        const { id, username, password } = await User.findOneAndUpdate(
-          { username: action.payload.username },
-          {
-            username: action.payload.username,
-            password: action.payload.password,
-          },
-          { upsert: true },
-        ).exec()
+        const { username, password } = action.payload
+
+        let user = await User.findOne({ username }).exec()
+
+        if (!user) {
+          console.log('user not found')
+          user = await new User(action.payload).save()
+        }
+
+        if (password !== user.password) {
+          dispatch(actions.loginFail())
+          break
+        }
+
+        const { id } = user
 
         socketPool.set(socket, { id, username, password })
 
@@ -112,7 +119,6 @@ io.on('connection', socket => {
   }
 
   socket.on('action', createListener(dispatch, socket))
-  socket.on('action', action => console.log(JSON.stringify(action, null, 2)))
 })
 
 server.listen(PORT)
