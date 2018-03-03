@@ -12,6 +12,7 @@ import * as actions from '../actions'
 import type { State } from '../front/store/reducers'
 import connect from './mongo'
 import User from './models/User'
+import Order from './models/Order'
 
 connect()
   .then(() => console.log('MongoDb connected'))
@@ -32,12 +33,26 @@ const socketPool = new WeakMap()
 
 app.use(express.static(staticPath))
 
+const getAllOrders = async () =>
+  ((await Order.find().exec()) || []).map(
+    ({ id, coords, owner, members, cartItems, chat }) => ({
+      id,
+      coords,
+      owner,
+      members,
+      cartItems,
+      chat,
+    }),
+  )
+
 type CreateListener = (
   dispatch: <A: actions.Action>(action: A) => A,
   socket: Object,
 ) => (action: actions.Action, state: State) => Promise<void>
 
 const createListener: CreateListener = (dispatch, socket) => async action => {
+  const user = socketPool.get(socket)
+
   try {
     switch (action.type) {
       case 'login': {
@@ -55,6 +70,34 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
         dispatch(actions.loginSuccess({ id, username }))
         break
       }
+
+      case 'create order': {
+        if (!user) return
+
+        const { id } = await Order.create({
+          coords: action.payload,
+          owner: user.username,
+        })
+
+        await Order.findByIdAndUpdate(id, {
+          members: {
+            [id]: {
+              approve: false,
+              readyToPaySum: 0,
+              paid: false,
+            },
+          },
+          cartItems: {
+            [id]: {
+              login: user.username,
+              products: [],
+            },
+          },
+        })
+
+        const orders = await getAllOrders()
+        dispatch(actions.ordersUpdate(orders))
+      }
     }
   } catch (err) {
     // $FlowFixMe
@@ -69,7 +112,7 @@ io.on('connection', socket => {
   }
 
   socket.on('action', createListener(dispatch, socket))
-  socket.on('action', console.log)
+  socket.on('action', action => console.log(JSON.stringify(action, null, 2)))
 })
 
 server.listen(PORT)
