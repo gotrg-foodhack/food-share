@@ -38,21 +38,27 @@ type CreateListener = (
 ) => (action: actions.Action, state: State) => Promise<void>
 
 const createListener: CreateListener = (dispatch, socket) => async action => {
-  switch (action.type) {
-    case 'login': {
-      const { id, username, password } = await User.findOneAndUpdate(
-        { username: action.payload.username },
-        {
-          username: action.payload.username,
-          password: action.payload.password,
-        },
-        { upsert: true },
-      ).exec()
+  try {
+    switch (action.type) {
+      case 'login': {
+        const { id, username, password } = await User.findOneAndUpdate(
+          { username: action.payload.username },
+          {
+            username: action.payload.username,
+            password: action.payload.password,
+          },
+          { upsert: true },
+        ).exec()
 
-      socketPool.set(socket, { id, username, password })
+        socketPool.set(socket, { id, username, password })
 
-      dispatch(actions.loginSuccess({ id, username }))
+        dispatch(actions.loginSuccess({ id, username }))
+        break
+      }
     }
+  } catch (err) {
+    // $FlowFixMe
+    dispatch({ type: 'error', payload: err.message })
   }
 }
 
