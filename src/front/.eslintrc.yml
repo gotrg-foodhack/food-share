@@ -13,5 +13,5 @@ globals:
   process: true
 
 rules:
-
+  react/style-prop-object: off
   import/no-extraneous-dependencies: off
