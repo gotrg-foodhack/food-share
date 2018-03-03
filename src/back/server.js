@@ -51,7 +51,7 @@ type CreateListener = (
 ) => (action: actions.Action, state: State) => Promise<void>
 
 const createListener: CreateListener = (dispatch, socket) => async action => {
-  const user = socketPool.get(socket)
+  const userFromPool = socketPool.get(socket)
 
   try {
     switch (action.type) {
@@ -79,11 +79,11 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
       }
 
       case 'create order': {
-        if (!user) return
+        if (!userFromPool) return
 
         const { id } = await Order.create({
           coords: action.payload,
-          owner: user.username,
+          owner: userFromPool.id,
         })
 
         await Order.findByIdAndUpdate(id, {
@@ -96,7 +96,7 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
           },
           cartItems: {
             [id]: {
-              login: user.username,
+              login: userFromPool.username,
               products: [],
             },
           },
