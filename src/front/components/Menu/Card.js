@@ -1,16 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Card, { CardContent, CardMedia } from 'material-ui/Card';
-import IconButton from 'material-ui/IconButton';
-import AddShoppingCartIcon from 'material-ui-icons/AddShoppingCart';
-import Typography from 'material-ui/Typography';
-import styled from 'styled-jss'
+import React from 'react'
+import { withStyles } from 'material-ui/styles'
+import Card, { CardContent, CardMedia } from 'material-ui/Card'
+import IconButton from 'material-ui/IconButton'
+import AddShoppingCartIcon from 'material-ui-icons/AddShoppingCart'
+import Typography from 'material-ui/Typography'
 
-const styles = theme => ({
+const styles = () => ({
   card: {
     display: 'flex',
     padding: '0 10px',
+    width: '300px',
   },
   details: {
     display: 'flex',
@@ -19,8 +18,8 @@ const styles = theme => ({
   cartImg: {
     display: 'flex',
     alignItems: 'center',
-    verticalAlign: 'middle'
-},
+    verticalAlign: 'middle',
+  },
   cover: {
     margin: '10px',
     width: 70,
@@ -30,20 +29,20 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
   },
-});
+})
 
 function MediaControlCard(props) {
-  const { classes, theme } = props;
+  const { classes, item } = props
 
   return (
     <div>
       <Card className={classes.card}>
-        <div className={classes.cartImg} >
-            <CardMedia
+        <div className={classes.cartImg}>
+          <CardMedia
             className={classes.cover}
             image={item.photo} // изображение
             title={item.name}
-            />
+          />
         </div>
         <div className={classes.details}>
           <CardContent className={classes.content}>
@@ -52,21 +51,15 @@ function MediaControlCard(props) {
               {item.price}
             </Typography>
           </CardContent>
-
         </div>
         <div className={classes.button}>
-        <IconButton>
+          <IconButton>
             <AddShoppingCartIcon />
-        </IconButton>
+          </IconButton>
         </div>
       </Card>
     </div>
-  );
+  )
 }
 
-MediaControlCard.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles, { withTheme: true })(MediaControlCard);
+export default withStyles(styles, { withTheme: true })(MediaControlCard)

@@ -15,7 +15,7 @@ const styles = {
   },
 }
 
-const currentUser = 'Витя'
+const currentUser = '111'
 
 const mapStateToProps = ({ orders }) => {
   const currentOrder = orders.find(

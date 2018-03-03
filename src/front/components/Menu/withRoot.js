@@ -1,8 +1,8 @@
-import React from 'react';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import purple from 'material-ui/colors/purple';
-import green from 'material-ui/colors/green';
-import Reboot from 'material-ui/Reboot';
+import React from 'react'
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import purple from 'material-ui/colors/purple'
+import green from 'material-ui/colors/green'
+import Reboot from 'material-ui/Reboot'
 
 // A theme with custom primary and secondary color.
 // It's optional.
@@ -19,7 +19,7 @@ const theme = createMuiTheme({
       dark: green[700],
     },
   },
-});
+})
 
 function withRoot(Component) {
   function WithRoot(props) {
@@ -31,10 +31,10 @@ function withRoot(Component) {
         <Reboot />
         <Component {...props} />
       </MuiThemeProvider>
-    );
+    )
   }
 
-  return WithRoot;
+  return WithRoot
 }
 
-export default withRoot;
+export default withRoot
