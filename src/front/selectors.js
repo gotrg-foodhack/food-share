@@ -20,3 +20,11 @@ export const getMyOrder: (state: State) => * = compose(
     userId: getUserId(state),
   }),
 )
+
+export const isIOwner: (state: State) => * = compose(
+  ({ myOrder, userId }) => !!(myOrder && myOrder.id === userId),
+  state => ({
+    myOrder: getMyOrder(state),
+    userId: getUserId(state),
+  }),
+)
