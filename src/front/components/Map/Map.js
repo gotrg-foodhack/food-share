@@ -8,6 +8,7 @@ import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl'
 import { compose } from 'recompose'
 
 import * as actions from '../../../actions'
+import * as selectors from '../../selectors'
 import { type State } from '../../store/reducers'
 
 import { MapOverlay } from '../MapOverlay'
@@ -24,16 +25,11 @@ const MapBox = ReactMapboxGl({
 
 export const Map = compose(
   connect(
-    ({ mapCenter, selfPosition }: State) => ({
-      mapCenter: [mapCenter.x, mapCenter.y],
-      selfPosition,
+    (state: State) => ({
+      mapCenter: selectors.getMapCenterPoint(state),
     }),
     dispatch => ({
       setMapCenter: ({ painter }) =>
-        console.log({
-          x: painter.transform.center.lng,
-          y: painter.transform.center.lat,
-        }) ||
         dispatch(
           actions.setMapCenter({
             x: painter.transform.center.lng,

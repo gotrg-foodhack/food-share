@@ -5,6 +5,24 @@ import { compose } from 'ramda'
 import type { State } from './store/reducers'
 import type { Chat } from '../types'
 
+export const getMapCenter = (state: State) => state.mapCenter
+export const getMapCenterX = compose(coords => coords.x, getMapCenter)
+export const getMapCenterY = compose(coords => coords.y, getMapCenter)
+
+export const getMapCenterPoint = (state: State): [number, number] => [
+  getMapCenterX(state),
+  getMapCenterY(state),
+]
+
+export const getSelfPosition = (state: State) => state.selfPosition
+export const getSelfPositionX = compose(coords => coords.x, getSelfPosition)
+export const getSelfPositionY = compose(coords => coords.y, getSelfPosition)
+
+export const getSelfPositionPoint = (state: State): [number, number] => [
+  getSelfPositionX(state),
+  getSelfPositionY(state),
+]
+
 export const getOrders = (state: State) => state.orders
 
 export const getUser = (state: State) => state.user
