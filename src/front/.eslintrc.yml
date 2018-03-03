@@ -1,0 +1,17 @@
+extends: ../../.eslintrc.yml
+
+env:
+  node: false
+  browser: true
+  commonjs: true
+
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+
+globals:
+  process: true
+
+rules:
+
+  import/no-extraneous-dependencies: off
