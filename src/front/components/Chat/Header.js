@@ -8,7 +8,6 @@ import CheckCircle from 'material-ui-icons/CheckCircle'
 import ExitToApp from 'material-ui-icons/ExitToApp'
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import Button from 'material-ui/Button'
-import Card, { CardHeader, CardContent } from 'material-ui/Card'
 import Collapse from 'material-ui/transitions/Collapse'
 
 const styles = {
@@ -66,7 +65,7 @@ class Header extends Component {
   }
 
   render() {
-    const { classes, members } = this.props
+    const { classes, members, onCancelOrder, onOrderPay } = this.props
     const { showMembers } = this.state
     const disabledBtn = !Object.values(members).every(({ approve }) => approve)
 
@@ -81,13 +80,17 @@ class Header extends Component {
                     Новый заказ
                   </Typography>
                   <div className={classes.flexRow}>
-                    <ExitToApp />
+                    <ExitToApp onClick={onCancelOrder} />
                     <Typography variant="subheading" color="inherit">
                       &nbsp;Выйти
                     </Typography>
                   </div>
                 </div>
-                <Button variant="raised" color="primary" disabled={disabledBtn}>
+                <Button
+                  variant="raised"
+                  color="primary"
+                  disabled={disabledBtn}
+                  onClick={onOrderPay}>
                   ОПЛАТИТЬ ЗАКАЗ
                 </Button>
                 <div className={cx(classes.flexColumn, classes.center)}>

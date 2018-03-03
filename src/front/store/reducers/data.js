@@ -37,6 +37,26 @@ export default [
       {
         eventType: 'message',
         userId: 'Вася',
+        text: 'Хочу заказать пиццу и бургер',
+      },
+      {
+        eventType: 'add to cart',
+        userId: 'Вася',
+        productId: 'pizza',
+      },
+      {
+        eventType: 'add to cart',
+        userId: 'Вася',
+        productId: 'burger',
+      },
+      {
+        eventType: 'set pay sum',
+        userId: 'Вася',
+        paySum: 550,
+      },
+      {
+        eventType: 'message',
+        userId: 'Петя',
         text: 'Привет. Я закажу салат.',
       },
       {
