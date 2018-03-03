@@ -1,44 +1,25 @@
-import React, { Component } from 'react'
-import Tabs, { Tab } from 'material-ui/Tabs'
-import { Chat } from '../Chat'
+/* @flow */
 
-export class App extends Component {
-  state = {
-    activeTab: 0,
-  }
+import * as React from 'react'
+import { connect } from 'react-redux'
 
-  onChangeTab = (event, value) => {
-    this.setState({ activeTab: value })
-  }
+// $FlowFixMe
+import { Order } from '../Order'
 
-  getStyle = number => ({
-    display: this.state.activeTab === number ? 'block' : 'none',
-    height: '100%',
-  })
+import * as store from '../../store/reducers'
+import * as selectors from '../../selectors'
 
-  render() {
-    return (
-      <div style={{ height: '100%' }}>
-        <div style={this.getStyle(0)}>
-          <Chat />
-        </div>
-        <div style={this.getStyle(1)}>
-          <Chat />
-        </div>
-        <div style={this.getStyle(2)}>
-          <Chat />
-        </div>
-        <Tabs
-          value={this.state.activeTab}
-          onChange={this.onChangeTab}
-          indicatorColor="primary"
-          textColor="primary"
-          fullWidth>
-          <Tab label="Чат" />
-          <Tab label="Детали заказа" />
-          <Tab label="Меню" href="#basic-tabs" />
-        </Tabs>
-      </div>
-    )
-  }
-}
+import { Map } from '../Map'
+import { LoginScreen } from '../LoginScreen'
+
+export const App = connect(
+  (state: store.State) => ({
+    isLoggedIn: selectors.isLoggedIn(state),
+    haveActiveOrder: selectors.haveActiveOrder(state),
+  }),
+  () => ({}), // Грязный хак. Нет времени на флоу.
+)(({ isLoggedIn, haveActiveOrder }) => {
+  if (!isLoggedIn) return <LoginScreen />
+  if (haveActiveOrder) return <Order />
+  return <Map />
+})
