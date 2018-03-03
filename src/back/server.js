@@ -10,6 +10,11 @@ import express from 'express'
 
 import * as actions from '../actions'
 import type { State } from '../front/store/reducers'
+import connect from './mongo'
+
+connect()
+  .then(() => console.log('MongoDb connected'))
+  .catch(err => console.log(err))
 
 dotenv.config()
 
