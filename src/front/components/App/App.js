@@ -1,4 +1,4 @@
 import React from 'react'
-import Text from 'material-ui/Typography'
+import { Chat } from '../Chat'
 
-export const App = () => <Text variant="title">Hello World!</Text>
+export const App = () => <Chat />
