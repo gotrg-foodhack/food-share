@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import { Chat } from '../Chat'
 
-export class App extends Component {
+export class Order extends Component {
   state = {
     activeTab: 0,
   }
