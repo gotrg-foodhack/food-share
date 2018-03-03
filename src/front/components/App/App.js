@@ -3,6 +3,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 
+// $FlowFixMe
 import { Order } from '../Order'
 
 import * as store from '../../store/reducers'
