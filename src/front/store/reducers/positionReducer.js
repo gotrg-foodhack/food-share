@@ -6,7 +6,7 @@ import * as actions from '../../../actions'
 export type State = types.Coords
 
 export const position = (type: 'update self position' | 'set map center') => (
-  state: State = { x: 0, y: 0 },
+  state: State = { x: 30.3717, y: 59.94 },
   action: actions.Action,
 ): State => {
   switch (action.type) {
