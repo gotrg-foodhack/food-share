@@ -10,6 +10,7 @@ import * as store from '../../store/reducers'
 import * as selectors from '../../selectors'
 
 import { Map } from '../Map'
+import { LoginScreen } from '../LoginScreen'
 
 export const App = connect(
   (state: store.State) => ({
@@ -18,7 +19,7 @@ export const App = connect(
   }),
   () => ({}), // Грязный хак. Нет времени на флоу.
 )(({ isLoggedIn, haveActiveOrder }) => {
-  if (!isLoggedIn) return null
+  if (!isLoggedIn) return <LoginScreen />
   if (haveActiveOrder) return <Order />
   return <Map />
 })
