@@ -14,11 +14,6 @@ import {
 
 export type { SelfPosition, MapCenter }
 
-export type State = {
-  selfPosition: SelfPosition,
-  mapCenter: MapCenter,
-}
-
 export type Orders = $ReadOnlyArray<types.Order>
 
 export const orders = (
@@ -32,6 +27,12 @@ export const orders = (
     default:
       return state
   }
+}
+
+export type State = {
+  selfPosition: SelfPosition,
+  mapCenter: MapCenter,
+  orders: Orders,
 }
 
 export const rootReducer = combineReducers({
