@@ -73,14 +73,17 @@ export type JoinToOrder = {
   payload: string,
 }
 
-export const joinToOrder = (payload: string): JoinToOrder => ({
+export const joinToOrder = (orderId: string): JoinToOrder => ({
   type: 'join to order',
-  payload,
+  payload: orderId,
 })
 
-export type CancelOrder = { type: 'cancel order' }
+export type CancelOrder = { type: 'cancel order', payload: string }
 
-export const cancelOrder = (): CancelOrder => ({ type: 'cancel order' })
+export const cancelOrder = (orderId: string): CancelOrder => ({
+  type: 'cancel order',
+  payload: orderId,
+})
 
 export type ChatMessage = {
   type: 'chat message',
