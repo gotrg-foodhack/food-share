@@ -1,12 +1,13 @@
 /* @flow */
 
 export type Coords = {
-  longitude: number,
-  latitude: number,
+  x: number,
+  y: number,
 }
 
 export type Order = {
   id: string,
+  coords: Coords,
   owner: string, // User.id
   members: {
     [userId: string]: {

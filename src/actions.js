@@ -176,7 +176,7 @@ export type OrdersUpdate = {
   payload: $ReadOnlyArray<types.Order>,
 }
 
-export const orderUpdate = (
+export const ordersUpdate = (
   payload: $ReadOnlyArray<types.Order>,
 ): OrdersUpdate => ({
   type: 'order update',
