@@ -24,11 +24,12 @@ const Message = ({
   productId,
   text,
   currentUser,
+  login,
 }) => {
   if (eventType === 'add to cart') {
     return (
       <Typography variant="caption" align="center" style={CustomCaption}>
-        <b>{userId}</b> добавляет <b>{productId}</b> к заказу
+        <b>{login}</b> добавляет <b>{productId}</b> к заказу
       </Typography>
     )
   }
@@ -36,7 +37,7 @@ const Message = ({
   if (eventType === 'set pay sum') {
     return (
       <Typography variant="caption" align="center" style={CustomCaption}>
-        <b>{userId}</b> готов(а) заплатить <b>{paySum}</b> руб.
+        <b>{login}</b> готов(а) заплатить <b>{paySum}</b> руб.
       </Typography>
     )
   }
@@ -48,7 +49,7 @@ const Message = ({
       {!withoutCaption && (
         <div>
           <Typography variant="caption" align="left" style={CustomCaption}>
-            {userId}
+            {login}
           </Typography>
         </div>
       )}

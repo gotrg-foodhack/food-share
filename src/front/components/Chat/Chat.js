@@ -15,7 +15,7 @@ const styles = {
   },
 }
 
-const currentUser = 'Витя'
+const currentUser = '111'
 
 const mapStateToProps = ({ orders }) => {
   const currentOrder = orders.find(
@@ -31,10 +31,6 @@ const mapStateToProps = ({ orders }) => {
 const enhance = compose(withStyles(styles), connect(mapStateToProps, actions))
 
 class Chat extends Component {
-  state = {}
-
-  componentDidMount() {}
-
   onOrderPay = () => {
     const { orderPay, orderId } = this.props
     orderPay(orderId)
@@ -61,8 +57,7 @@ class Chat extends Component {
   }
 
   render() {
-    const { classes, members, chat, ...props } = this.props
-    console.log(props)
+    const { classes, members, chat } = this.props
 
     return (
       <div className={classes.chat}>
