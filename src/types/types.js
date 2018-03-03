@@ -41,6 +41,7 @@ export type Order = {
   id: string,
   coords: Coords,
   owner: string, // User.id
+  ownerLogin: string,
   members: {
     [userId: string]: {
       approve: boolean,
