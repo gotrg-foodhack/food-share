@@ -18,7 +18,8 @@ export type Order = {
   },
   cartItems: {
     [userId: string]: {
-      [productId: string]: number,
+      login: string,
+      products: $ReadOnlyArray<{ [productId: string]: number }>,
     },
   },
   chat: $ReadOnlyArray<
