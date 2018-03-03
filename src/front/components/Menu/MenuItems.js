@@ -10,7 +10,7 @@ import CakeIcon from 'material-ui-icons/Cake'
 import ExpandLess from 'material-ui-icons/ExpandLess'
 import ExpandMore from 'material-ui-icons/ExpandMore'
 import People from 'material-ui-icons/People'
-import MediaControlCard from './Card'
+import MediaControlCard from './MediaControlCard'
 import { menu } from '../../mdm'
 
 const mapSectionToIcon = {
@@ -37,19 +37,17 @@ class MenuItems extends React.Component {
   }
 
   renderMenuCards = productClass => {
+    const { addToCart } = this.props
     const itemsByCategory = values(menu[productClass].products)
     return itemsByCategory.map(item => (
-      <MediaControlCard key={item.id} item={item} />
+      <MediaControlCard key={item.id} item={item} addToCart={addToCart} />
     ))
   }
   render() {
     const { classes } = this.props
     return keys(menu).map(section => (
       <div key={section}>
-        <ListItem
-          button
-          primary={menu[section].name}
-          onClick={() => this.handleClick(section)}>
+        <ListItem button onClick={() => this.handleClick(section)}>
           <ListItemIcon>{mapSectionToIcon[section]}</ListItemIcon>
           <ListItemText inset primary={menu[section].name} />
           {this.state[`${section}Open`] ? <ExpandLess /> : <ExpandMore />}

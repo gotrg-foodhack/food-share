@@ -1,4 +1,5 @@
 import React from 'react'
+import { compose } from 'recompose'
 import { withStyles } from 'material-ui/styles'
 import ListSubheader from 'material-ui/List/ListSubheader'
 import List from 'material-ui/List'
@@ -21,6 +22,8 @@ const styles = theme => ({
   },
 })
 
+const enhance = compose(withRoot, withStyles(styles))
+
 const Menu = ({ classes }) => (
   <div className={classes.root}>
     <List
@@ -31,4 +34,4 @@ const Menu = ({ classes }) => (
   </div>
 )
 
-export default withRoot(withStyles(styles)(Menu))
+export default enhance(Menu)

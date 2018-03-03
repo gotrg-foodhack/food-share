@@ -1,14 +1,11 @@
 /* @flow */
-
 import * as React from 'react'
 import { connect } from 'react-redux'
-
 // $FlowFixMe
 import { Order } from '../Order'
 
 import * as store from '../../store/reducers'
 import * as selectors from '../../selectors'
-
 import { Map } from '../Map'
 import { LoginScreen } from '../LoginScreen'
 

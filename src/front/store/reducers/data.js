@@ -21,11 +21,12 @@ export default [
     },
     cartItems: {
       '111': {
-        pizza: 1,
-        burger: 1,
+        login: 'Вася',
+        products: [{ cesar: 1 }, { cookiesChocolate: 1 }],
       },
       '222': {
-        salad: 1,
+        login: 'Петя',
+        products: [{ cocaCola: 1 }],
       },
     },
     chat: [
@@ -105,7 +106,7 @@ export default [
         readyToPaySum: 125,
         paid: false,
       },
-      Настя: {
+      '666': {
         approve: true,
         readyToPaySum: 125,
         paid: false,
@@ -113,7 +114,8 @@ export default [
     },
     cartItems: {
       '444': {
-        pizza: 1,
+        login: 'Галя',
+        products: [{ pepperoniWithLove: 1 }],
       },
     },
     chat: [
@@ -184,15 +186,16 @@ export default [
     },
     cartItems: {
       '777': {
-        pizza: 2,
-        burger: 2,
+        login: 'Витя',
+        products: [{ dodo: 2 }, { maffinVanilla: 2 }],
       },
       '888': {
-        salad: 1,
-        burger: 1,
+        login: 'Надо',
+        products: [{ margarita: 1 }, { sprite: 1 }],
       },
       '999': {
-        cocaCola: 4,
+        login: 'Выйти',
+        products: [{ cocaCola: 4 }],
       },
     },
     chat: [
