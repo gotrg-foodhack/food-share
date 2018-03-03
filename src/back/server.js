@@ -88,14 +88,14 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
 
         await Order.findByIdAndUpdate(id, {
           members: {
-            [id]: {
+            [userFromPool.id]: {
               approve: false,
               readyToPaySum: 0,
               paid: false,
             },
           },
           cartItems: {
-            [id]: {
+            [userFromPool.id]: {
               login: userFromPool.username,
               products: [],
             },
