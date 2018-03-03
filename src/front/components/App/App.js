@@ -15,7 +15,7 @@ export const App = connect(
     isLoggedIn: selectors.isLoggedIn(state),
     haveActiveOrder: selectors.haveActiveOrder(state),
   }),
-  () => ({}),
+  () => ({}), // Грязный хак. Нет времени на флоу.
 )(({ isLoggedIn, haveActiveOrder }) => {
   if (!isLoggedIn) return null
   if (haveActiveOrder) return <Order />
