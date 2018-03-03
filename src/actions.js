@@ -84,51 +84,69 @@ export const cancelOrder = (): CancelOrder => ({ type: 'cancel order' })
 
 export type ChatMessage = {
   type: 'chat message',
-  payload: string,
+  payload: { orderId: string, message: string },
 }
 
-export const chatMessage = (payload: string): ChatMessage => ({
+export const chatMessage = (payload: {
+  orderId: string,
+  message: string,
+}): ChatMessage => ({
   type: 'chat message',
   payload,
 })
 
 export type AddToCart = {
   type: 'add to cart',
-  payload: string,
+  payload: { orderId: string, productId: string },
 }
 
-export const addToCart = (payload: string): AddToCart => ({
+export const addToCart = (payload: {
+  orderId: string,
+  productId: string,
+}): AddToCart => ({
   type: 'add to cart',
   payload,
 })
 
 export type RemoveFromCart = {
   type: 'remove from cart',
-  payload: string,
+  payload: { orderId: string, productId: string },
 }
 
-export const removeFromCart = (payload: string): RemoveFromCart => ({
+export const removeFromCart = (payload: {
+  orderId: string,
+  productId: string,
+}): RemoveFromCart => ({
   type: 'remove from cart',
   payload,
 })
 
 export type SetPaySum = {
   type: 'set pay sum',
-  payload: number,
+  payload: { orderId: string, paySum: number },
 }
 
-export const setPaySum = (payload: number): SetPaySum => ({
+export const setPaySum = (payload: {
+  orderId: string,
+  paySum: number,
+}): SetPaySum => ({
   type: 'set pay sum',
   payload,
 })
 
-export type OrderApprove = { type: 'order approve' }
+export type OrderApprove = { type: 'order approve', payload: string }
 
-export const orderApprove = (): OrderApprove => ({ type: 'order approve' })
+export const orderApprove = (orderId: string): OrderApprove => ({
+  type: 'order approve',
+  payload: orderId,
+})
 
-export type OrderPay = { type: 'order pay' }
+export type OrderPay = { type: 'order pay', payload: string }
 
-export const orderPay = (): OrderPay => ({ type: 'order pay' })
+export const orderPay = (orderId: string): OrderPay => ({
+  type: 'order pay',
+  payload: orderId,
+})
 
 export type Login = {
   type: 'login',
