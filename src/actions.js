@@ -18,6 +18,7 @@ export type Action =
   | RemoveFromCart
   | SetPaySum
   | OrderApprove
+  | CancelOrderApprove
   | OrderPay
   | Login
   | Logout
@@ -141,6 +142,16 @@ export type OrderApprove = { type: 'order approve', payload: string }
 
 export const orderApprove = (orderId: string): OrderApprove => ({
   type: 'order approve',
+  payload: orderId,
+})
+
+export type CancelOrderApprove = {
+  type: 'cancel order approve',
+  payload: string,
+}
+
+export const cancelOrderApprove = (orderId: string): CancelOrderApprove => ({
+  type: 'cancel order approve',
   payload: orderId,
 })
 
