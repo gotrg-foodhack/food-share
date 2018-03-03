@@ -7,6 +7,7 @@ import IconButton from 'material-ui/IconButton'
 import AddShoppingCartIcon from 'material-ui-icons/AddShoppingCart'
 import Typography from 'material-ui/Typography'
 import * as actions from '../../../actions'
+import { getMyOrderId } from '../../selectors'
 
 const styles = () => ({
   card: {
@@ -34,16 +35,9 @@ const styles = () => ({
   },
 })
 
-const currentUser = '111'
-
-const mapStateToProps = ({ orders }) => {
-  const currentOrder = orders.find(
-    ({ owner, members }) => owner === currentUser || members[currentUser],
-  )
-  return {
-    orderId: !currentOrder ? null : currentOrder.id,
-  }
-}
+const mapStateToProps = state => ({
+  orderId: getMyOrderId(state) || null,
+})
 
 const enhance = compose(
   withStyles(styles, { withTheme: true }),

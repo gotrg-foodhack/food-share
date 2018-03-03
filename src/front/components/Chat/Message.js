@@ -1,5 +1,6 @@
 import React from 'react'
 import Typography from 'material-ui/Typography'
+import { getUserId } from '../../selectors'
 
 const messageStyles = {
   display: 'inline-flex',

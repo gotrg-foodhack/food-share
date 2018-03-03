@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import { Chat } from '../Chat'
+import { Details } from '../Details'
+import { Menu } from '../Menu'
 
 export class Order extends Component {
   state = {
@@ -13,7 +15,7 @@ export class Order extends Component {
 
   getStyle = number => ({
     display: this.state.activeTab === number ? 'block' : 'none',
-    height: '100%',
+    height: '90%',
   })
 
   render() {
@@ -23,10 +25,10 @@ export class Order extends Component {
           <Chat />
         </div>
         <div style={this.getStyle(1)}>
-          <Chat />
+          <Details />
         </div>
         <div style={this.getStyle(2)}>
-          <Chat />
+          <Menu />
         </div>
         <Tabs
           value={this.state.activeTab}
