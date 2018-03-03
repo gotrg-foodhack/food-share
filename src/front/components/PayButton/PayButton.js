@@ -1,6 +1,6 @@
 /* @flow */
 
-import { compose, withProps } from 'recompose'
+import { compose, defaultProps } from 'recompose'
 import { connect } from 'react-redux'
 
 import Button from 'material-ui/Button'
@@ -21,7 +21,7 @@ export const PayButton = compose(
       onClick: currentOrderId && (() => cancelOrder(currentOrderId)),
     }),
   ),
-  withProps({
+  defaultProps({
     children: 'Оплатить',
   }),
 )(Button)
