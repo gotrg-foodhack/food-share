@@ -1,0 +1,24 @@
+version: '3.5'
+services:
+  back:
+    image: node:8-alpine
+    container_name: omnomnom-back
+    volumes:
+      - ./src:/app/src:ro
+      - ./node_modules:/app/node_modules:ro
+      - ./.babelrc:/app/.babelrc:ro
+      - ./package.json:/app/package.json:ro
+    ports:
+      - 3000:3000
+    links:
+      - db:db
+    depends_on:
+      - db
+    working_dir: /app
+    entrypoint: yarn
+    command: dev:back
+  db:
+    image: mongo:3.6.3
+    container_name: omnomnom-mongo
+    volumes:
+      - ./mongo:/data/db

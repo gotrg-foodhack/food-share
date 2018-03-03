@@ -1,0 +1,15 @@
+{
+  "presets": [
+    "flow",
+    ["env", {
+      "targets": { "node": "current" },
+      "useBuiltIns": true,
+      "spec": true,
+      "debug": false
+    }]
+  ],
+  "plugins": [
+    "ramda",
+    "transform-object-rest-spread"
+  ]
+}

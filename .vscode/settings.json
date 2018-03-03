@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": false,
+  "eslint.autoFixOnSave": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "flow.useNPMPackagedFlow": true,
+  "javascript.validate.enable": false,
+  "typescript.validate.enable": false
+}
