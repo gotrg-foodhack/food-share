@@ -27,6 +27,9 @@ jss
 
 const store = configureStore()
 
+
+if (process.env.NODE_ENV !== 'production') window.dispatch = store.dispatch
+
 render(<Root store={store} />, (document.getElementById('root'): any))
 
 if (module.hot && typeof module.hot.accept == 'function') {
