@@ -13,6 +13,14 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  customSubtext: {
+    fontSize: '21px',
+    paddingTop: '10px',
+  },
+}
+
+const textCustom = {
+  fontSize: '16px',
 }
 
 class Footer extends Component {
@@ -35,14 +43,14 @@ class Footer extends Component {
 
     return (
       <div className={classes.chatFooter}>
-        <Typography>Внесено: {contributed} &nbsp;</Typography>
+        <Typography className={classes.underlined}><div className={classes.customSubtext}> Внесено: {contributed} &nbsp; </div></Typography>
         <Typography>
-          Подтвердить:
+        <div className={classes.customSubtext}> Подтвердить:
           <Switch
             color="primary"
             checked={this.state.approved}
             onChange={this.toggleApprove}
-          />
+          /> </div>
         </Typography>
       </div>
     )

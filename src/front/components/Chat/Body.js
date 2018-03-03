@@ -4,6 +4,8 @@ import cx from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import Message from './Message'
+import Send from 'material-ui-icons/Send'
+import IconButton from 'material-ui/IconButton'
 
 const styles = {
   chatBody: {
@@ -16,6 +18,11 @@ const styles = {
     flexDirection: 'column',
     flexGrow: 1,
     justifyContent: 'flex-end',
+    fontSize: '21px',
+    padding: '40px 0 20px 0',
+  },
+  chatArea: {
+    overflow: 'auto',
   },
   flexColumn: {
     display: 'flex',
@@ -28,15 +35,19 @@ const styles = {
     outline: 'none',
     border: '1px solid #ccc',
     resize: 'none',
-    width: '75%',
+    height: '40px',
+    width: '85%',
+    fontSize: '21px',
   },
   inputBtn: {
     borderRadius: 0,
-    width: '25%',
+    height: '55px',
+    width: '15%',
+    paddingBottom: '10px',
   },
   marginBetween: {
     '& * + *': {
-      marginTop: '4px',
+      marginTop: '8px',
     },
   },
 }
@@ -73,22 +84,24 @@ class Body extends Component {
 
     return (
       <div className={classes.chatBody}>
+      <div className={classes.chatArea}>
         <div className={cx(classes.chatMessages, classes.marginBetween)}>
           {this.renderMessages()}
         </div>
-        <div className={classes.flexRow} style={{ marginTop: '4px' }}>
+      </div>
+        <div className={classes.flexRow} style={{ marginTop: '0px' }}>
           <textarea
             className={classes.input}
             value={messageInput}
             onChange={this.onInputChange}
           />
-          <Button
+          <IconButton
             className={classes.inputBtn}
             variant="raised"
             color="primary"
             onClick={this.onSendMessage}>
-            Отправить
-          </Button>
+            <Send />
+          </IconButton>
         </div>
       </div>
     )

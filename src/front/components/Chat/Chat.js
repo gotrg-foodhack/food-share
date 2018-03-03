@@ -11,11 +11,11 @@ const styles = {
   chat: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
+    height: '90%',
   },
 }
 
-const currentUser = 'Вася'
+const currentUser = 'Витя'
 
 const mapStateToProps = ({ orders }) => {
   const currentOrder = orders.find(
