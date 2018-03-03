@@ -3,6 +3,7 @@
 import { compose } from 'ramda'
 
 import type { State } from './store/reducers'
+import type { Chat } from '../types'
 
 export const getOrders = (state: State) => state.orders
 
@@ -34,17 +35,17 @@ export const getMyOrder: (state: State) => * = compose(
 )
 
 export const getMyOrderMembers: (state: State) => * = compose(
-  order => order && order.members,
+  order => (order ? order.members : {}),
   getMyOrder,
 )
 
 export const getMyOrderCartItems: (state: State) => * = compose(
-  order => order && order.cartItems,
+  order => (order ? order.cartItems : {}),
   getMyOrder,
 )
 
-export const getMyOrderChat: (state: State) => * = compose(
-  order => order && order.chat,
+export const getMyOrderChat: (state: State) => Chat = compose(
+  order => (order ? order.chat : []),
   getMyOrder,
 )
 
