@@ -8,6 +8,7 @@ import preset from 'jss-preset-default'
 import normalize from 'normalize-jss'
 
 import * as actions from '../actions'
+// $FlowFixMe
 import { configureStore } from './store/configureStore'
 
 import { Root } from './components/Root'
