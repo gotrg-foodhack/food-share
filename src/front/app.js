@@ -7,6 +7,7 @@ import jss from 'jss'
 import preset from 'jss-preset-default'
 import normalize from 'normalize-jss'
 
+import * as actions from '../actions'
 import { configureStore } from './store/configureStore'
 
 import { Root } from './components/Root'
@@ -27,6 +28,16 @@ jss
 
 const store = configureStore()
 
+if ('geolocation' in navigator) {
+  navigator.geolocation.watchPosition(({ coords }) =>
+    store.dispatch(
+      actions.updateSelfPosition({
+        x: coords.longitude,
+        y: coords.latitude,
+      }),
+    ),
+  )
+}
 
 if (process.env.NODE_ENV !== 'production') window.dispatch = store.dispatch
 
