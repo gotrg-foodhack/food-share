@@ -107,27 +107,23 @@ class Footer extends Component {
     return (
       <div className={classes.chatFooter}>
         <div className={classes.firstRow}>
-          <Typography className={classes.underlined}>
-            <div
-              role="button"
-              tabIndex="0"
-              className={cx(classes.customSubtext, classes.dashed)}
-              onClick={this.toggleModal}
-              onKeyPress={this.toggleModal}>
-              Внесено: {readyToPaySum} &nbsp;
-            </div>
-          </Typography>
-          <Typography>
-            <div className={classes.customSubtext}>
-              {' '}
-              Подтвердить:
-              <Switch
-                color="primary"
-                checked={approved}
-                onChange={this.toggleApprove}
-              />{' '}
-            </div>
-          </Typography>
+          <div
+            role="button"
+            tabIndex="0"
+            className={cx(classes.customSubtext, classes.dashed)}
+            onClick={this.toggleModal}
+            onKeyPress={this.toggleModal}>
+            Внесено: {readyToPaySum} &nbsp;
+          </div>
+          <div className={classes.customSubtext}>
+            {' '}
+            Подтвердить:
+            <Switch
+              color="primary"
+              checked={approved}
+              onChange={this.toggleApprove}
+            />{' '}
+          </div>
         </div>
         <Tooltip
           id="tooltip-icon"
