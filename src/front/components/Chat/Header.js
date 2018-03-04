@@ -39,21 +39,18 @@ const styles = {
     textAlign: 'center',
   },
   membersList: {
-    position: 'absolute',
     backgroundColor: '#f5f5f5',
     fontSize: '21px',
-    width: '100%',
-    zIndex: 1200,
-    padding: '20px',
-    boxShadow:
-      '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+    height: '120px',
+    paddingTop: '10px',
+    overflow: 'auto',
   },
   memberRow: {
     display: 'flex',
     flexGrow: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '5px 10px',
+    padding: '2px 10px',
   },
   outButton: {
     width: '45px',
