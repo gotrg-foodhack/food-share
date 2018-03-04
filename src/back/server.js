@@ -38,13 +38,14 @@ app.use(express.static(staticPath))
 
 const getAllOrders = async (): Promise<$ReadOnlyArray<types.Order>> =>
   ((await Order.find().exec()) || []).map(
-    ({ id, coords, owner, members, cartItems, chat }) => ({
+    ({ id, coords, owner, members, cartItems, chat, inPayTransaction }) => ({
       id,
       coords,
       owner,
       members,
       cartItems,
       chat,
+      inPayTransaction,
     }),
   )
 
@@ -70,6 +71,8 @@ const removeFromObj = <O>(obj: O, idForRemove): O => {
 }
 
 const randomPayDelay = () => Math.floor(Math.random() * 5000)
+
+const wait = () => new Promise(res => setTimeout(res, randomPayDelay()))
 
 type CreateListener = (
   dispatch: <A: actions.Action>(action: A, broadcast?: boolean) => A,
@@ -183,8 +186,20 @@ const createListener: CreateListener = (dispatch, socket) => async (
 
         if (!order) return
 
-        toPairs(order.members).forEach(([userId, oldMember]) =>
-          setTimeout(async () => {
+        const { id, ...orderData } = order
+
+        await Order.findByIdAndUpdate(id, {
+          ...orderData,
+          inPayTransaction: true,
+        }).exec()
+
+        const orders = await getAllOrders()
+        dispatch(actions.ordersUpdate(orders), true)
+
+        await Promise.all(
+          toPairs(order.members).map(async ([userId, oldMember]) => {
+            await wait()
+
             const { id: orderId, members: oldMembers, ...orderData } = order
 
             const message: types.ChatEvent = {
@@ -211,11 +226,12 @@ const createListener: CreateListener = (dispatch, socket) => async (
               ...newOrder,
             }
 
-            await Order.findByIdAndUpdate(orderId, newOrder)
+            await Order.findByIdAndUpdate(orderId, newOrder).exec()
 
             const orders = await getAllOrders()
+
             dispatch(actions.ordersUpdate(orders), true)
-          }, randomPayDelay()),
+          }),
         )
 
         break
