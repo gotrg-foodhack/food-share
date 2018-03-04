@@ -31,6 +31,9 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    '& * + *': {
+      marginLeft: '8px',
+    },
   },
   customSubtext: {
     outline: 'none',
@@ -129,7 +132,7 @@ class Footer extends Component {
           id="tooltip-icon"
           title="Внесено / Сумма заказа (Осталось внести)">
           <div className={classes.secondRow} aria-label="money">
-            <Typography>
+            <Typography style={{ fontSize: '21px' }}>
               {contributed} / {total} ({need})
             </Typography>
             <PayButton />

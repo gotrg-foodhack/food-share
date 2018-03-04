@@ -47,7 +47,7 @@ combo.forAll = {
 
 combo.forTwo = {
   id: 'forTwo',
-  name: 'Для двох',
+  name: 'Для двоих',
   price: 995,
   photo: forTwo,
   category: combo,

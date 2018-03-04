@@ -9,7 +9,6 @@ const navStyle = {
   backgroundColor: '#ffffff',
   width: '100%',
   bottom: 0,
-  paddingBottom: '20px',
   fontSize: '21px !important',
 }
 
@@ -46,9 +45,12 @@ export class Order extends Component {
           textColor="primary"
           style={navStyle}
           fullWidth>
-          <Tab label={<div style={{fontSize: '1rem'}}>{"Чат"}</div>} />
-          <Tab label={<div style={{fontSize: '1rem'}}>{"Детали заказа"}</div>} />
-          <Tab label={<div style={{fontSize: '1rem'}}>{"Меню"}</div>} href="#basic-tabs" />
+          <Tab label={<div style={{ fontSize: '1rem' }}>Чат</div>} />
+          <Tab label={<div style={{ fontSize: '1rem' }}>Детали заказа</div>} />
+          <Tab
+            label={<div style={{ fontSize: '1rem' }}>Меню</div>}
+            href="#basic-tabs"
+          />
         </Tabs>
       </div>
     )
