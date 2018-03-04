@@ -19,7 +19,7 @@ const styles = {
     flexDirection: 'column',
     flexGrow: 1,
     justifyContent: 'flex-end',
-    fontSize: '21px',
+    fontSize: '18px',
     padding: '40px 0 20px 0',
   },
   chatArea: {
@@ -37,7 +37,7 @@ const styles = {
     border: '1px solid #ccc',
     resize: 'none',
     height: '40px',
-    width: '85%',
+    width: '80%',
     fontSize: '21px',
   },
   inputBtn: {
@@ -119,7 +119,7 @@ class Body extends Component {
             position: 'fixed',
             background: '#ffffff',
             bottom: '23%',
-            paddingLeft: '3px',
+            paddingLeft: '20px',
             width: '100%',
           }}>
           <textarea

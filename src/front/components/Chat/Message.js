@@ -10,7 +10,7 @@ const messageStyles = {
   padding: '10px 15px',
   backgroundColor: '#e6e6e6',
   borderRadius: '7px',
-  marginTop: '2px',
+  marginTop: '4px',
   textAlign: 'left',
 }
 
