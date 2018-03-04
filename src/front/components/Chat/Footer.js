@@ -30,7 +30,8 @@ const styles = {
   secondRow: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    padding: '0 10px',
     '& * + *': {
       marginLeft: '8px',
     },
