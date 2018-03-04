@@ -64,7 +64,10 @@ export const Map = compose(
         width: '100%',
       }}>
       {orders.map(order => (
-        <Marker key={order.id} coordinates={mapCenter} anchor="bottom">
+        <Marker
+          key={order.id}
+          coordinates={[order.coords.x, order.coords.y]}
+          anchor="bottom">
           <AvatarButton onClick={joinToOrder(order.id)}>
             <UserAvatar order={order} />
           </AvatarButton>
