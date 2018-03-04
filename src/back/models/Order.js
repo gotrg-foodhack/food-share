@@ -6,6 +6,7 @@ const order = new Schema(
   {
     coords: { type: Object },
     owner: { type: String },
+    inPayTransaction: { type: Boolean },
     members: { type: Object },
     cartItems: { type: Object },
     chat: { type: Array },

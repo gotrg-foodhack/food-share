@@ -46,6 +46,7 @@ export type Chat = $ReadOnlyArray<ChatEvent>
 export type NewOrder = {
   coords: Coords,
   owner: string, // User.id
+  inPayTransaction?: boolean,
   members: {
     [userId: string]: {
       login: string,

@@ -62,7 +62,9 @@ class Body extends Component {
     this.setState({ messageInput: value })
 
   onSendMessage = () => {
-    this.props.onSendMessage(this.state.messageInput)
+    const { messageInput } = this.state
+    if (!messageInput.trim()) return
+    this.props.onSendMessage(messageInput)
     this.setState({ messageInput: '' })
   }
 
