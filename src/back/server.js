@@ -92,22 +92,28 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
           owner: userFromPool.id,
         })
 
-        await Order.findByIdAndUpdate(id, {
-          members: {
-            [userFromPool.id]: {
-              login: userFromPool.username,
-              approve: false,
-              readyToPaySum: 0,
-              paid: false,
+        await Order.findByIdAndUpdate(
+          id,
+          ({
+            owner: userFromPool.id,
+            coords: action.payload,
+            members: {
+              [userFromPool.id]: {
+                login: userFromPool.username,
+                approve: false,
+                readyToPaySum: 0,
+                paid: false,
+              },
             },
-          },
-          cartItems: {
-            [userFromPool.id]: {
-              login: userFromPool.username,
-              products: [],
+            cartItems: {
+              [userFromPool.id]: {
+                login: userFromPool.username,
+                products: [],
+              },
             },
-          },
-        })
+            chat: [],
+          }: types.NewOrder),
+        )
 
         const orders = await getAllOrders()
         dispatch(actions.ordersUpdate(orders))
@@ -140,6 +146,45 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
             chat,
           })
         }
+
+        const orders = await getAllOrders()
+        dispatch(actions.ordersUpdate(orders))
+
+        break
+      }
+
+      case 'join to order': {
+        if (!userFromPool) return
+
+        const order: ?types.Order = await Order.findById(action.payload)
+        if (!order) return
+
+        const { id: orderId, ...orderData } = order
+
+        const member = {
+          login: userFromPool.username,
+          approve: false,
+          readyToPaySum: 0,
+          paid: false,
+        }
+
+        const cartItem = {
+          login: userFromPool.username,
+          products: [],
+        }
+
+        const message = {
+          eventType: 'join to order',
+          userId: userFromPool.id,
+          login: userFromPool.username,
+        }
+
+        await Order.findByIdAndUpdate(orderId, {
+          ...orderData,
+          members: { ...order.members, [userFromPool.id]: member },
+          cartItems: { ...order.members, [userFromPool.id]: cartItem },
+          chat: order.chat.concat(message),
+        })
 
         const orders = await getAllOrders()
         dispatch(actions.ordersUpdate(orders))
