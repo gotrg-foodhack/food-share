@@ -27,10 +27,13 @@ const styles = theme => ({
   listStyle: {
     height: '90%',
   },
+  listMenu: {
+    padding: '0 10px',
+  },
   nested: {
     display: 'flex',
     flexDirection: 'column',
-    paddingLeft: theme.spacing.unit * 4,
+    padding: '5px 0',
     '& * + *': {
       marginTop: '10px',
     },
@@ -46,7 +49,7 @@ const Menu = ({ classes }) => (
       className={classes.listStyle}
       component="nav"
       subheader={<ListSubheader className={classes.menuTitle} component="div">Меню</ListSubheader>}>
-      <MenuItems classes={classes}/>
+      <MenuItems classes={classes} style={{paddingLeft: 0}}/>
     </List>
   </div>
 )

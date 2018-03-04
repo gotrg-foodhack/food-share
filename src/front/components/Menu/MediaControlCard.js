@@ -15,6 +15,7 @@ const styles = () => ({
     display: 'flex',
     padding: '0 10px',
     width: '300px',
+    margin: '0 auto',
   },
   details: {
     display: 'flex',
@@ -69,7 +70,7 @@ class MediaControlCard extends Component {
           <div className={classes.cartImg}>
             <CardMedia
               className={classes.cover}
-              image={item.photo} // изображение
+              image={item.photo}
               title={item.name}
             />
           </div>
