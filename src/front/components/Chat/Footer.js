@@ -156,7 +156,11 @@ class Footer extends Component {
             <Button onClick={this.toggleModal} color="secondary">
               Отмена
             </Button>
-            <Button onClick={this.onSetPaySum} color="primary" autoFocus>
+            <Button
+              onClick={this.onSetPaySum}
+              color="primary"
+              autoFocus
+              disabled={!Number.isInteger(+inputMoney)}>
               Ок
             </Button>
           </DialogActions>
