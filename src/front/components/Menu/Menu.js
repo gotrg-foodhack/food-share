@@ -9,8 +9,18 @@ import MenuItems from './MenuItems'
 const styles = theme => ({
   root: {
     width: '100%',
-    maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
+  },
+  textItem: {
+    fontSize: '24px !important',
+  },
+  menuTitle: {
+    width: '100%',
+    // backgroundColor: '#002984',
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    color: '#ffffff',
+    position: 'relative',
+    fontSize: '21px',
   },
   nested: {
     display: 'flex',
@@ -22,14 +32,15 @@ const styles = theme => ({
   },
 })
 
+
 const enhance = compose(withRoot, withStyles(styles))
 
 const Menu = ({ classes }) => (
   <div className={classes.root}>
     <List
       component="nav"
-      subheader={<ListSubheader component="div">Меню</ListSubheader>}>
-      <MenuItems classes={classes} />
+      subheader={<ListSubheader className={classes.menuTitle} component="div">Меню</ListSubheader>}>
+      <MenuItems classes={classes}/>
     </List>
   </div>
 )

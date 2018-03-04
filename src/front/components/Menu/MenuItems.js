@@ -22,6 +22,10 @@ const mapSectionToIcon = {
   combo: <People />,
 }
 
+const style = {
+  fontSize: '1.5rem !important',
+}
+
 class MenuItems extends React.Component {
   state = {
     pizzaOpen: false,
@@ -47,9 +51,9 @@ class MenuItems extends React.Component {
     const { classes } = this.props
     return keys(menu).map(section => (
       <div key={section}>
-        <ListItem button onClick={() => this.handleClick(section)}>
+        <ListItem onClick={() => this.handleClick(section)}>
           <ListItemIcon>{mapSectionToIcon[section]}</ListItemIcon>
-          <ListItemText inset primary={menu[section].name} />
+          <ListItemText primary={<div style={{fontSize: '21px'}}> {menu[section].name} </div>} />
           {this.state[`${section}Open`] ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse
@@ -57,7 +61,7 @@ class MenuItems extends React.Component {
           timeout="auto"
           unmountOnExit>
           <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
+            <ListItem className={classes.nested}>
               {this.renderMenuCards(section)}
             </ListItem>
           </List>

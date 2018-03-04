@@ -10,6 +10,7 @@ import * as actions from '../../../actions'
 
 const styles = () => ({
   card: {
+    position: 'relative',
     display: 'flex',
     padding: '0 10px',
     width: '300px',
@@ -17,6 +18,7 @@ const styles = () => ({
   details: {
     display: 'flex',
     alignItems: 'center',
+    minWidth: '150px',
   },
   cartImg: {
     display: 'flex',
@@ -24,14 +26,23 @@ const styles = () => ({
     verticalAlign: 'middle',
   },
   cover: {
-    margin: '10px',
+    margin: '5px',
     width: 70,
     height: 70,
   },
   button: {
+    poaition: 'absolute',
+    right: '20px',
     display: 'flex',
     alignItems: 'center',
   },
+  addIcon: {
+    width: '50px',
+  },
+  priceSpan: {
+    color: '#ff7043',
+    fontWeight: 600,
+  }
 })
 
 const currentUser = '111'
@@ -70,15 +81,15 @@ class MediaControlCard extends Component {
           </div>
           <div className={classes.details}>
             <CardContent className={classes.content}>
-              <Typography variant="headline"> {item.name} </Typography>
-              <Typography variant="subheading" color="textSecondary">
-                {item.price}
+              <Typography variant="title"> {item.name} </Typography>
+              <Typography className={classes.priceSpan} variant="subheading" color="textSecondary">
+                {item.price}&nbsp;₽
               </Typography>
             </CardContent>
           </div>
           <div className={classes.button}>
             <IconButton>
-              <AddShoppingCartIcon />
+              <AddShoppingCartIcon className={classes.addIcon}/>
             </IconButton>
           </div>
         </Card>
