@@ -32,6 +32,12 @@ const styles = {
   },
 }
 
+const appBarStyle = {
+  background: '#ff7043',
+  boxShadow:
+    '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+}
+
 const mapStateToProps = state => ({
   orderId: getMyOrderId(state) || null,
   cartItems: getMyOrderCartItems(state) || {},
@@ -59,7 +65,10 @@ class Details extends Component {
 
     return sortedCartItems.map(({ userId, login, products }) => (
       <div key={userId} style={{ marginTop: '12px' }}>
-        <Typography style={{fontSize: '21px', padding: '10px 14px'}} variant="caption" align="left">
+        <Typography
+          style={{ fontSize: '21px', padding: '10px 14px' }}
+          variant="caption"
+          align="left">
           {userId === currentUser ? 'Ваш заказ:' : `${login} заказал:`}
         </Typography>
         <Card>
@@ -90,16 +99,14 @@ class Details extends Component {
 
     return (
       <div className={classes.details}>
-        <AppBar
-        position="static"
-        color="default"
-        style={{background: '#ff7043', boxShadow: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'}}>
+        <AppBar position="static" color="default" style={appBarStyle}>
           <Toolbar>
             <Typography
-            style={{
-              color: '#ffffff',
-              fontSize: '21px',
-              fontWeight: 500,}}>
+              style={{
+                color: '#ffffff',
+                fontSize: '21px',
+                fontWeight: 500,
+              }}>
               Поставщик: Dodo pizza
             </Typography>
           </Toolbar>

@@ -23,5 +23,7 @@ export const PayButton = compose(
   ),
   defaultProps({
     children: 'Оплатить',
+    variant: 'raised',
+    type: 'primary',
   }),
 )(Button)
