@@ -54,6 +54,7 @@ export const PayButton = compose(
       disabled: isInPayTransaction,
       onClick: currentOrderId && (() => orderPay(currentOrderId)),
       classes,
+      isInPayTransaction,
     }),
   ): any),
   defaultProps({
