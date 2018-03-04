@@ -17,7 +17,7 @@ const styles = {
   },
   CustomToolbar: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
   },
