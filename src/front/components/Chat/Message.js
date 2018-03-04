@@ -29,19 +29,19 @@ const Message = ({
   currentUser,
   login,
 }) => {
-  const productName =
-    productId && values(products).find(({ id }) => id === productId).name
+  const { name } =
+    (productId && values(products).find(({ id }) => id === productId)) || {}
   switch (eventType) {
     case 'add to cart':
       return (
         <Typography variant="caption" align="center" style={CustomCaption}>
-          <b>{login}</b> добавляет <b>{productName}</b> к заказу
+          <b>{login}</b> добавляет <b>{name}</b> к заказу
         </Typography>
       )
     case 'remove from cart':
       return (
         <Typography variant="caption" align="center" style={CustomCaption}>
-          <b>{login}</b> убирает <b>{productName}</b> из заказа
+          <b>{login}</b> убирает <b>{name}</b> из заказа
         </Typography>
       )
     case 'order pay':

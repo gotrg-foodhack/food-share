@@ -49,7 +49,7 @@ const styles = {
   },
   customSubtext: {
     outline: 'none',
-    fontSize: '21px',
+    fontSize: '18px',
     paddingTop: '10px',
   },
   dashed: {
@@ -94,7 +94,8 @@ class Footer extends Component {
       p.forEach(product => {
         const productName = keys(product)[0]
         const productCount = values(product)[0]
-        const { price } = values(products).find(({ id }) => id === productName)
+        const { price } =
+          values(products).find(({ id }) => id === productName) || {}
         total += productCount * price
       }),
     )
@@ -125,7 +126,7 @@ class Footer extends Component {
           id="tooltip-icon"
           title="Внесено / Сумма заказа (Осталось внести)">
           <div className={classes.secondRow} aria-label="money">
-            <Typography style={{ fontSize: '21px' }}>
+            <Typography style={{ fontSize: '18px' }}>
               {contributed} / {total}
             </Typography>
             <PayButton />
