@@ -46,6 +46,21 @@ const getAllOrders = async (): Promise<$ReadOnlyArray<types.Order>> =>
     }),
   )
 
+const getOrderById = async (id: string): Promise<?types.Order> => {
+  const order: ?types.Order = await Order.findById(id).exec()
+
+  return (
+    order && {
+      id: order.id,
+      coords: order.coords,
+      owner: order.owner,
+      members: order.members,
+      cartItems: order.cartItems,
+      chat: order.chat,
+    }
+  )
+}
+
 const removeFromObj = (obj, idForRemove): any =>
   Object.entries(obj)
     .filter(([id]) => id !== idForRemove)
@@ -128,7 +143,7 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
       case 'cancel order': {
         if (!userFromPool) return
 
-        const order: ?types.Order = await Order.findById(action.payload)
+        const order = await getOrderById(action.payload)
         if (!order) return
 
         if (order.owner === userFromPool.id) {
@@ -170,8 +185,7 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
 
       case 'join to order': {
         if (!userFromPool) return
-
-        const order: ?types.Order = await Order.findById(action.payload)
+        const order = await getOrderById(action.payload)
         if (!order) return
 
         const { id: orderId, ...orderData } = order
@@ -199,7 +213,7 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
           ({
             ...orderData,
             members: { ...order.members, [userFromPool.id]: member },
-            cartItems: { ...order.members, [userFromPool.id]: cartItem },
+            cartItems: { ...order.cartItems, [userFromPool.id]: cartItem },
             chat: order.chat.concat(message),
           }: types.NewOrder),
         )
@@ -213,6 +227,7 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
   } catch (err) {
     // $FlowFixMe
     dispatch({ type: 'error', payload: err.message })
+    console.log(err)
   }
 }
 
