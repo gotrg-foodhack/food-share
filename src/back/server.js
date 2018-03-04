@@ -353,6 +353,111 @@ const createListener: CreateListener = (dispatch, socket) => async (
 
         break
       }
+
+      case 'add to cart': {
+        if (!userFromPool) return
+        const order = await getOrderById(action.payload.orderId)
+        if (!order) return
+
+        const { id: orderId, ...orderData } = order
+        const cartItem = order.cartItems[userFromPool.id]
+        const currentProductId = action.payload.productId
+
+        const productForChange = cartItem.products.find(
+          product => product[currentProductId],
+        )
+
+        const products = productForChange
+          ? cartItem.products.map(product => {
+              if (!product[currentProductId]) return product
+              return {
+                [currentProductId]: product[currentProductId] + 1,
+              }
+            })
+          : cartItem.products.concat({ [currentProductId]: 1 })
+
+        const cartItems = {
+          ...order.cartItems,
+          [userFromPool.id]: {
+            ...cartItem,
+            products,
+          },
+        }
+
+        const message = {
+          eventType: 'add to cart',
+          userId: userFromPool.id,
+          login: userFromPool.username,
+          productId: currentProductId,
+        }
+
+        await Order.findByIdAndUpdate(
+          orderId,
+          ({
+            ...orderData,
+            cartItems,
+            chat: order.chat.concat(message),
+          }: types.NewOrder),
+        )
+
+        const orders = await getAllOrders()
+        dispatch(actions.ordersUpdate(orders), true)
+
+        break
+      }
+
+      case 'remove from cart': {
+        if (!userFromPool) return
+        const order = await getOrderById(action.payload.orderId)
+        if (!order) return
+
+        const { id: orderId, ...orderData } = order
+        const cartItem = order.cartItems[userFromPool.id]
+        const currentProductId = action.payload.productId
+
+        const productForChange = cartItem.products.find(
+          product => product[currentProductId],
+        )
+
+        if (!productForChange) return
+
+        const products = cartItem.products.reduce((acc, product) => {
+          if (!product[currentProductId]) return acc.concat(product)
+          const countProduct = product[currentProductId] - 1
+          if (!countProduct) return acc
+
+          return acc.concat({ [currentProductId]: countProduct })
+        }, [])
+
+        const cartItems = {
+          ...order.cartItems,
+          [userFromPool.id]: {
+            ...cartItem,
+            products,
+          },
+        }
+
+        const message = {
+          eventType: 'remove from cart',
+          userId: userFromPool.id,
+          login: userFromPool.username,
+          productId: currentProductId,
+        }
+
+        await Order.findByIdAndUpdate(
+          orderId,
+          ({
+            ...orderData,
+            cartItems,
+            chat: order.chat.concat(message),
+          }: types.NewOrder),
+        )
+
+        const orders = await getAllOrders()
+        dispatch(actions.ordersUpdate(orders), true)
+
+        break
+      }
     }
   } catch (err) {
     // $FlowFixMe
