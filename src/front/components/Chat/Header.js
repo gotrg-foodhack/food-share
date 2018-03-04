@@ -9,7 +9,7 @@ import ExitToApp from 'material-ui-icons/ExitToApp'
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import Button from 'material-ui/Button'
 import Collapse from 'material-ui/transitions/Collapse'
-import IconButton from 'material-ui/IconButton';
+import IconButton from 'material-ui/IconButton'
 
 const styles = {
   barStyles: {
@@ -80,10 +80,10 @@ class Header extends Component {
   renderMembers = () => {
     const { classes, members } = this.props
     return Object.keys(members).map(member => {
-      const { approve, readyToPaySum } = members[member]
+      const { approve, login, readyToPaySum } = members[member]
       return (
         <div key={member} className={classes.memberRow}>
-          <div>{member}</div>
+          <div>{login}</div>
           <div style={{ display: 'flex' }} className={classes.center}>
             {approve && <CheckCircle />}
             <span style={{ marginLeft: '8px' }}>{`${readyToPaySum} руб.`}</span>
@@ -102,36 +102,45 @@ class Header extends Component {
       <div className={classes.flexColumn}>
         <div className={classes.flexRow}>
           <div className={classes.barStyles}>
-          <AppBar position="static" color="default">
-            <Toolbar>
-              <div className={classes.CustomToolbar}>
-              <Typography className={classes.titleCustom} variant="headline" color="inherit">
+            <AppBar position="static" color="default">
+              <Toolbar>
+                <div className={classes.CustomToolbar}>
+                  <Typography
+                    className={classes.titleCustom}
+                    variant="headline"
+                    color="inherit">
                     Ваш заказ
-              </Typography>
-              <div className={cx(classes.flexRow, classes.spaceBetween)}>
-                <div className={classes.spaceBetween}>
-                  <div className={cx(classes.flexRow, classes.center)}>
-                    <IconButton>
-                    <ExitToApp className={classes.outButton} onClick={onCancelOrder} />
-                    </IconButton>
+                  </Typography>
+                  <div className={cx(classes.flexRow, classes.spaceBetween)}>
+                    <div className={classes.spaceBetween}>
+                      <div className={cx(classes.flexRow, classes.center)}>
+                        <IconButton>
+                          <ExitToApp
+                            className={classes.outButton}
+                            onClick={onCancelOrder}
+                          />
+                        </IconButton>
+                      </div>
+                    </div>
+                    <Button
+                      className={classes.payBtn}
+                      variant="raised"
+                      color="primary"
+                      size="large"
+                      disabled={disabledBtn}
+                      onClick={onOrderPay}>
+                      ОПЛАТИТЬ
+                    </Button>
+                    <div className={cx(classes.flexColumn, classes.center)}>
+                      <KeyboardArrowDown
+                        className={classes.outButton}
+                        onClick={this.toggleCollapse}
+                      />
+                    </div>
                   </div>
                 </div>
-                <Button
-                  className={classes.payBtn}
-                  variant="raised"
-                  color="primary"
-                  size="large"
-                  disabled={disabledBtn}
-                  onClick={onOrderPay}>
-                  ОПЛАТИТЬ
-                </Button>
-                <div className={cx(classes.flexColumn, classes.center)}>
-                  <KeyboardArrowDown className={classes.outButton} onClick={this.toggleCollapse} />
-                </div>
-                </div>
-              </div>
-            </Toolbar>
-          </AppBar>
+              </Toolbar>
+            </AppBar>
           </div>
         </div>
         <Collapse in={showMembers} timeout="auto" unmountOnExit>

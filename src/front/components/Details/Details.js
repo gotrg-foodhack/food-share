@@ -10,6 +10,7 @@ import Card from 'material-ui/Card'
 import ProductDetails from './ProductDetails'
 import { products as productsData } from '../../mdm'
 import * as actions from '../../../actions'
+import { getMyOrderCartItems, getMyOrderId, getUserId } from '../../selectors'
 
 const styles = {
   details: {
@@ -30,17 +31,11 @@ const styles = {
   },
 }
 
-const currentUser = '111'
-
-const mapStateToProps = ({ orders }) => {
-  const currentOrder = orders.find(
-    ({ owner, members }) => owner === currentUser || members[currentUser],
-  )
-  return {
-    orderId: !currentOrder ? null : currentOrder.id,
-    cartItems: !currentOrder ? {} : currentOrder.cartItems,
-  }
-}
+const mapStateToProps = state => ({
+  orderId: getMyOrderId(state) || null,
+  cartItems: getMyOrderCartItems(state) || {},
+  currentUser: getUserId(state) || null,
+})
 
 const enhance = compose(withStyles(styles), connect(mapStateToProps, actions))
 
@@ -51,7 +46,7 @@ class Details extends Component {
   }
 
   renderOrderDetails = () => {
-    const { cartItems, classes } = this.props
+    const { cartItems, classes, currentUser } = this.props
     const sortedCartItems = []
     keys(cartItems).forEach(userId => {
       if (userId === currentUser) {
@@ -90,7 +85,7 @@ class Details extends Component {
   }
 
   render() {
-    const { classes, cartItems, ...props } = this.props
+    const { classes } = this.props
 
     return (
       <div className={classes.details}>

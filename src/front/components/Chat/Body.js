@@ -66,13 +66,12 @@ class Body extends Component {
   }
 
   renderMessages = () => {
-    const { chat, currentUser } = this.props
+    const { chat } = this.props
     return chat.map((message, idx) => (
       <Message
         key={`${message.userId}-${idx}`}
         index={idx}
         chat={chat}
-        currentUser={currentUser}
         {...message}
       />
     ))
@@ -84,11 +83,11 @@ class Body extends Component {
 
     return (
       <div className={classes.chatBody}>
-      <div className={classes.chatArea}>
-        <div className={cx(classes.chatMessages, classes.marginBetween)}>
-          {this.renderMessages()}
+        <div className={classes.chatArea}>
+          <div className={cx(classes.chatMessages, classes.marginBetween)}>
+            {this.renderMessages()}
+          </div>
         </div>
-      </div>
         <div className={classes.flexRow} style={{ marginTop: '0px' }}>
           <textarea
             className={classes.input}

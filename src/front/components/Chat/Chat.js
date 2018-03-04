@@ -6,6 +6,12 @@ import Header from './Header'
 import Body from './Body'
 import * as actions from '../../../actions'
 import Footer from './Footer'
+import {
+  getMyOrderId,
+  getMyOrderChat,
+  getMyOrderMembers,
+  getUserId,
+} from '../../selectors'
 
 const styles = {
   chat: {
@@ -15,18 +21,12 @@ const styles = {
   },
 }
 
-const currentUser = '111'
-
-const mapStateToProps = ({ orders }) => {
-  const currentOrder = orders.find(
-    ({ owner, members }) => owner === currentUser || members[currentUser],
-  )
-  return {
-    orderId: !currentOrder ? null : currentOrder.id,
-    members: !currentOrder ? {} : currentOrder.members,
-    chat: !currentOrder ? [] : currentOrder.chat,
-  }
-}
+const mapStateToProps = state => ({
+  orderId: getMyOrderId(state) || null,
+  members: getMyOrderMembers(state) || {},
+  chat: getMyOrderChat(state) || [],
+  currentUser: getUserId(state) || null,
+})
 
 const enhance = compose(withStyles(styles), connect(mapStateToProps, actions))
 
@@ -57,7 +57,7 @@ class Chat extends Component {
   }
 
   render() {
-    const { classes, members, chat } = this.props
+    const { classes, members, chat, currentUser } = this.props
 
     return (
       <div className={classes.chat}>
