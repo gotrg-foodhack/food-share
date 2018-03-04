@@ -126,7 +126,7 @@ class Footer extends Component {
           title="Внесено / Сумма заказа (Осталось внести)">
           <div className={classes.secondRow} aria-label="money">
             <Typography style={{ fontSize: '21px' }}>
-              {contributed} / {total} ({need})
+              {contributed} / {total}
             </Typography>
             <PayButton />
           </div>
@@ -135,7 +135,7 @@ class Footer extends Component {
           className={cx(classes.thirdRow, need < 0 && classes.show)}
           aria-label="money">
           <Typography style={{ fontSize: '12px' }}>
-            Отрицательный остаток на чай курьеру
+            {-need} на чай курьеру
           </Typography>
         </div>
         <Dialog
