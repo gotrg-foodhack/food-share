@@ -21,15 +21,16 @@ const ProductDetails = ({
         {price} руб. х {count} шт. = {price * count} руб.
       </Typography>
     </CardContent>
-    <RemoveShoppingCart
-      style={{
-        display: isOwner ? 'block' : 'none',
-        alignSelf: 'center',
-        marginRight: '4px',
-        color: 'black',
-      }}
-      onClick={onRemove}
-    />
+    <IconButton onClick={onRemove}>
+      <RemoveShoppingCart
+        style={{
+          display: isOwner ? 'block' : 'none',
+          alignSelf: 'center',
+          marginRight: '4px',
+          color: 'black',
+        }}
+      />
+    </IconButton>
   </div>
 )
 
