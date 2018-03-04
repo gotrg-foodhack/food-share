@@ -7,7 +7,7 @@ import { resolve } from 'path'
 import dotenv from 'dotenv'
 import socketIO from 'socket.io'
 import express from 'express'
-import { toPairs } from 'ramda'
+import { toPairs, values } from 'ramda'
 
 import * as actions from '../actions'
 // eslint-disable-next-line prettier/prettier
@@ -185,23 +185,31 @@ const createListener: CreateListener = (dispatch, socket) => async (
 
         const { id: orderId, members, ...orderData } = order
 
-        toPairs(members).forEach(([userId, member]) =>
+        toPairs(members).forEach(([userId, oldMember]) =>
           setTimeout(async () => {
             const message: types.ChatEvent = {
               eventType: 'order pay',
               userId,
-              login: member.login,
-              paySum: member.readyToPaySum,
+              login: oldMember.login,
+              paySum: oldMember.readyToPaySum,
             }
 
-            await Order.findByIdAndUpdate(
-              orderId,
-              ({
-                ...orderData,
-                members: { ...members, [userId]: member },
-                chat: order.chat.concat(message),
-              }: types.NewOrder),
+            const member = { ...oldMember, paid: true }
+
+            const newOrder: types.NewOrder = {
+              ...orderData,
+              members: { ...members, [userId]: member },
+              chat: order.chat.concat(message),
+            }
+
+            const inPayTransaction = !values(newOrder.members).every(
+              currentMember => currentMember.paid,
             )
+
+            await Order.findByIdAndUpdate(orderId, {
+              ...newOrder,
+              inPayTransaction,
+            })
 
             const orders = await getAllOrders()
             dispatch(actions.ordersUpdate(orders), true)
