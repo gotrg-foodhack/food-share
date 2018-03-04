@@ -3,7 +3,15 @@ import { CardContent, CardMedia } from 'material-ui/Card'
 import Typography from 'material-ui/Typography/Typography'
 import RemoveShoppingCart from 'material-ui-icons/RemoveShoppingCart'
 
-const ProductDetails = ({ classes, photo, name, price, count, onRemove }) => (
+const ProductDetails = ({
+  classes,
+  photo,
+  name,
+  price,
+  count,
+  isOwner,
+  onRemove,
+}) => (
   <div className={classes.flexRow}>
     <CardMedia className={classes.cover} image={photo} title={name} />
     <CardContent className={classes.content}>
@@ -13,7 +21,12 @@ const ProductDetails = ({ classes, photo, name, price, count, onRemove }) => (
       </Typography>
     </CardContent>
     <RemoveShoppingCart
-      style={{ alignSelf: 'center', marginRight: '4px', color: 'black' }}
+      style={{
+        display: isOwner ? 'block' : 'none',
+        alignSelf: 'center',
+        marginRight: '4px',
+        color: 'black',
+      }}
       onClick={onRemove}
     />
   </div>

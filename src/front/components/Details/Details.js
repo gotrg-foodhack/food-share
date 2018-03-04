@@ -88,6 +88,7 @@ class Details extends Component {
                 price={price}
                 photo={photo}
                 count={count}
+                isOwner={userId === currentUser}
                 onRemove={() => this.onRemoveFromCart(id)}
               />
             )

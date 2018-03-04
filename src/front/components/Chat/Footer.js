@@ -22,7 +22,7 @@ const styles = {
     flexDirection: 'column',
   },
   firstRow: {
-    padding: '6px',
+    padding: '0 10px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -35,6 +35,16 @@ const styles = {
     '& * + *': {
       marginLeft: '8px',
     },
+  },
+  thirdRow: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 10px',
+    opacity: 0,
+    transition: 'opacity 0.1s ease-in',
+  },
+  show: {
+    opacity: 1,
   },
   customSubtext: {
     outline: 'none',
@@ -120,6 +130,13 @@ class Footer extends Component {
             <PayButton />
           </div>
         </Tooltip>
+        <div
+          className={cx(classes.thirdRow, need < 0 && classes.show)}
+          aria-label="money">
+          <Typography style={{ fontSize: '12px' }}>
+            Отрицательный остаток на чай курьеру
+          </Typography>
+        </div>
         <Dialog
           open={modal}
           onClose={this.toggleModal}

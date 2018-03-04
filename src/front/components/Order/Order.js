@@ -47,10 +47,7 @@ export class Order extends Component {
           fullWidth>
           <Tab label={<div style={{ fontSize: '1rem' }}>Чат</div>} />
           <Tab label={<div style={{ fontSize: '1rem' }}>Детали заказа</div>} />
-          <Tab
-            label={<div style={{ fontSize: '1rem' }}>Меню</div>}
-            href="#basic-tabs"
-          />
+          <Tab label={<div style={{ fontSize: '1rem' }}>Меню</div>} />
         </Tabs>
       </div>
     )
