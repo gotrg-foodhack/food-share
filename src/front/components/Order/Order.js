@@ -4,6 +4,15 @@ import { Chat } from '../Chat'
 import { Details } from '../Details'
 import { Menu } from '../Menu'
 
+const navStyle = {
+  position: 'fixed',
+  backgroundColor: '#ffffff',
+  width: '100%',
+  bottom: 0,
+  paddingBottom: '20px',
+  fontSize: '21px !important',
+}
+
 export class Order extends Component {
   state = {
     activeTab: 0,
@@ -35,6 +44,7 @@ export class Order extends Component {
           onChange={this.onChangeTab}
           indicatorColor="primary"
           textColor="primary"
+          style={navStyle}
           fullWidth>
           <Tab label="Чат" />
           <Tab label="Детали заказа" />

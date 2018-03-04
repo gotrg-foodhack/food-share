@@ -22,6 +22,9 @@ const styles = theme => ({
     position: 'relative',
     fontSize: '21px',
   },
+  listStyle: {
+    height: '90%',
+  },
   nested: {
     display: 'flex',
     flexDirection: 'column',
@@ -38,6 +41,7 @@ const enhance = compose(withRoot, withStyles(styles))
 const Menu = ({ classes }) => (
   <div className={classes.root}>
     <List
+      className={classes.listStyle}
       component="nav"
       subheader={<ListSubheader className={classes.menuTitle} component="div">Меню</ListSubheader>}>
       <MenuItems classes={classes}/>
