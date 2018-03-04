@@ -122,12 +122,13 @@ export const isIOwner: (state: State) => * = compose(
 
 export const isReadyToPay: (state: State) => * = compose(
   // eslint-disable-next-line
-  ({ cartSum, readyToPaySum, isIOwner, isAllApproved }) =>
-    isIOwner && isAllApproved && readyToPaySum >= cartSum,
+  ({ cartSum, readyToPaySum, isIOwner, isAllApproved, isAllPaid }) =>
+    !isAllPaid && isIOwner && isAllApproved && readyToPaySum >= cartSum,
   (state: State) => ({
     cartSum: getMyOrderCartItemsProductsSum(state),
     readyToPaySum: getReadyToPaySum(state),
     isIOwner: isIOwner(state),
     isAllApproved: isAllApproved(state),
+    isAllPaid: isAllPaid(state),
   }),
 )
