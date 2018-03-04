@@ -27,7 +27,8 @@
   "scripts": {
     "lint": "eslint .",
     "flow": "flow",
-    "image:publish": "yarn image:build && yarn image:tag && yarn image:push",
+    "image:publish": "yarn image:build-emergency && yarn image:tag && yarn image:push",
+    "image:build-emergency": "yarn build && docker build --no-cache -t omnomnom:latest -f ./Dockerfile.emergency .",
     "image:build": "docker build --no-cache -t omnomnom:latest .",
     "image:tag": "docker tag omnomnom gotrgfoodhack/omnomnom:latest",
     "image:push": "docker push gotrgfoodhack/omnomnom:latest",
