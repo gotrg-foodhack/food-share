@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import cx from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
@@ -17,9 +16,10 @@ const styles = {
     zIndex: 1300,
   },
   CustomToolbar: {
-    display: 'block',
-    margin: '0 auto',
-    padding: '10px 0',
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
   },
   titleCustom: {
     textAlign: 'center',
@@ -38,9 +38,6 @@ const styles = {
     alignItems: 'center',
     textAlign: 'center',
   },
-  spaceBetween: {
-    justifyContent: 'space-between',
-  },
   membersList: {
     position: 'absolute',
     backgroundColor: '#f5f5f5',
@@ -57,10 +54,6 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '5px 10px',
-  },
-  payBtn: {
-    borderRadius: '5px',
-    margin: '0 15px',
   },
   outButton: {
     width: '45px',
@@ -100,33 +93,28 @@ class Header extends Component {
       <div className={classes.flexColumn}>
         <div className={classes.flexRow}>
           <div className={classes.barStyles}>
-            <AppBar style={{background: '#ff7043'}} position="static" color="primary">
+            <AppBar
+              style={{ background: '#ff7043' }}
+              position="static"
+              color="primary">
               <Toolbar>
                 <div className={classes.CustomToolbar}>
+                  <IconButton>
+                    <ExitToApp
+                      className={classes.outButton}
+                      onClick={onCancelOrder}
+                    />
+                  </IconButton>
                   <Typography
                     className={classes.titleCustom}
                     variant="headline"
                     color="inherit">
                     Ваш заказ
                   </Typography>
-                  <div className={cx(classes.flexRow, classes.spaceBetween)}>
-                    <div className={classes.spaceBetween}>
-                      <div className={cx(classes.flexRow, classes.center)}>
-                        <IconButton>
-                          <ExitToApp
-                            className={classes.outButton}
-                            onClick={onCancelOrder}
-                          />
-                        </IconButton>
-                      </div>
-                    </div>
-                    <div className={cx(classes.flexColumn, classes.center)}>
-                      <KeyboardArrowDown
-                        className={classes.outButton}
-                        onClick={this.toggleCollapse}
-                      />
-                    </div>
-                  </div>
+                  <KeyboardArrowDown
+                    className={classes.outButton}
+                    onClick={this.toggleCollapse}
+                  />
                 </div>
               </Toolbar>
             </AppBar>
