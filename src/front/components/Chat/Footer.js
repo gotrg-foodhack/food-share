@@ -20,6 +20,7 @@ const styles = {
   chatFooter: {
     display: 'flex',
     flexDirection: 'column',
+    flexShrink: 0,
   },
   firstRow: {
     padding: '0 10px',
