@@ -32,7 +32,7 @@ const styles = theme => ({
     flexDirection: 'column',
     paddingLeft: theme.spacing.unit * 4,
     '& * + *': {
-      marginTop: '6px',
+      marginTop: '10px',
     },
   },
 })
