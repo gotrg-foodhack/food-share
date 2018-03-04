@@ -5,9 +5,44 @@ import styled from 'styled-jss'
 import { connect } from 'react-redux'
 import { compose, withStateHandlers, withProps } from 'recompose'
 import TextField from 'material-ui/TextField'
+import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 
+import raccoon from './raccoon.png'
+
 import * as actions from '../../../actions'
+
+const RaccoonImg = withProps({
+  src: raccoon,
+})(
+  styled('img')({
+    width: '100%',
+    maxWidth: 240,
+    margin: 0,
+    padding: 0,
+    // paddingTop:
+  }),
+)
+
+const Headline = styled('p')({
+  fontFamily: 'Yanone Kaffeesatz',
+  fontWeight: 700,
+  fontSize: 52,
+  lineHeight: 1,
+})
+
+const Raccoon = withProps({
+  children: (
+    <React.Fragment>
+      <RaccoonImg />
+      <Headline>OmNomNom</Headline>
+    </React.Fragment>
+  ),
+})(
+  styled('div')({
+    textAlign: 'center',
+  }),
+)
 
 const Wrapper = styled('div')({
   boxSizing: 'border-box',
@@ -42,6 +77,7 @@ export const LoginScreen = compose(
   })),
 )(({ setUsername, setPassword, login, username, password }) => (
   <Wrapper>
+    <Raccoon />
     <Username value={username} onChange={setUsername} />
     <Password value={password} onChange={setPassword} />
     <LoginButton onClick={login} />
