@@ -23,7 +23,7 @@ const mapSectionToIcon = {
 }
 
 const style = {
-  padding: '26px 10px',
+  padding: '20px 10px',
 }
 
 class MenuItems extends React.Component {

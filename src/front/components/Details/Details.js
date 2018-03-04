@@ -19,11 +19,13 @@ const styles = {
   },
   flexRow: {
     display: 'flex',
+    maxWidth: '100%',
     padding: '8px 4px',
     color: '#ffffff',
   },
   content: {
     flex: '1 0 auto',
+    width: '245px',
     paddingBottom: '0!important',
   },
   cover: {

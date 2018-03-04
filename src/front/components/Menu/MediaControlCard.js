@@ -21,7 +21,7 @@ const styles = () => ({
   details: {
     display: 'flex',
     alignItems: 'center',
-    minWidth: '150px',
+    width: '150px',
   },
   cartImg: {
     display: 'flex',
@@ -38,9 +38,6 @@ const styles = () => ({
     right: '20px',
     display: 'flex',
     alignItems: 'center',
-  },
-  addIcon: {
-    width: '50px',
   },
   priceSpan: {
     color: '#ff7043',
