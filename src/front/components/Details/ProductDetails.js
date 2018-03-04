@@ -13,7 +13,7 @@ const ProductDetails = ({ classes, photo, name, price, count, onRemove }) => (
       </Typography>
     </CardContent>
     <RemoveShoppingCart
-      style={{ alignSelf: 'center', marginRight: '4px' }}
+      style={{ alignSelf: 'center', marginRight: '4px', color: 'black' }}
       onClick={onRemove}
     />
   </div>

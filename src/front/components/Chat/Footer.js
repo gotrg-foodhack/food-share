@@ -46,21 +46,6 @@ const styles = {
   },
 }
 
-const cartItems = {
-  '777': {
-    login: 'Витя',
-    products: [{ dodo: 2 }, { maffinVanilla: 2 }],
-  },
-  '888': {
-    login: 'Надо',
-    products: [{ margarita: 1 }, { sprite: 1 }],
-  },
-  '999': {
-    login: 'Выйти',
-    products: [{ cocaCola: 4 }],
-  },
-}
-
 class Footer extends Component {
   constructor(props) {
     super(props)
@@ -89,7 +74,7 @@ class Footer extends Component {
   toggleModal = () => this.setState(prev => ({ modal: !prev.modal }))
 
   render() {
-    const { classes, members, currentUser } = this.props
+    const { classes, members, currentUser, cartItems } = this.props
     const { readyToPaySum } = members[currentUser]
     const { approved, modal, inputMoney } = this.state
     const contributed = sum(map(prop('readyToPaySum'), values(members)))

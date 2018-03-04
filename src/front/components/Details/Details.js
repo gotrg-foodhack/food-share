@@ -73,9 +73,10 @@ class Details extends Component {
         </Typography>
         <Card>
           {products.map(product => {
-            const { id, name, photo, price } = values(productsData).find(
-              ({ id: productId }) => product[productId],
-            )
+            const { id, name, photo, price } =
+              values(productsData).find(
+                ({ id: productId }) => product[productId],
+              ) || {}
             const count = values(product)[0]
             return (
               <ProductDetails
