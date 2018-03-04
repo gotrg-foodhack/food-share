@@ -4,10 +4,10 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import CheckCircle from 'material-ui-icons/CheckCircle'
-import ExitToApp from 'material-ui-icons/ExitToApp'
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import Collapse from 'material-ui/transitions/Collapse'
-import IconButton from 'material-ui/IconButton'
+
+import { OrderCancelButton } from '../OrderCancelButton'
 
 const styles = {
   barStyles: {
@@ -86,7 +86,7 @@ class Header extends Component {
   }
 
   render() {
-    const { classes, onCancelOrder } = this.props
+    const { classes } = this.props
     const { showMembers } = this.state
 
     return (
@@ -99,12 +99,7 @@ class Header extends Component {
               color="primary">
               <Toolbar>
                 <div className={classes.CustomToolbar}>
-                  <IconButton>
-                    <ExitToApp
-                      className={classes.outButton}
-                      onClick={onCancelOrder}
-                    />
-                  </IconButton>
+                  <OrderCancelButton />
                   <Typography
                     className={classes.titleCustom}
                     variant="headline"

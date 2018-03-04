@@ -17,11 +17,12 @@ export const OrderCancelButton = compose(
       currentOrderId: selectors.getMyOrderId(state),
     }),
     dispatch => ({
-      cancelOrder: () => compose(dispatch, actions.cancelOrder),
+      cancelOrder: compose(dispatch, actions.cancelOrder),
     }),
-    ({ currentOrderId }, { cancelOrder }) => ({
-      onClick: currentOrderId && (() => cancelOrder(currentOrderId)),
-    }),
+    ({ currentOrderId }, { cancelOrder }) =>
+      console.log(currentOrderId, cancelOrder) || {
+        onClick: currentOrderId && (() => cancelOrder(currentOrderId)),
+      },
   ),
   withProps({
     children: <ExitToApp />,
