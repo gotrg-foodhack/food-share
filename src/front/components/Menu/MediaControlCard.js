@@ -60,13 +60,11 @@ const enhance = compose(
 class MediaControlCard extends Component {
   onAddToCart = () => {
     const { addToCart, orderId, item } = this.props
-    console.log(item, orderId)
     addToCart({ productId: item.id, orderId })
   }
 
   render() {
     const { classes, item } = this.props
-    console.count('menu')
     return (
       <div>
         <Card className={classes.card}>

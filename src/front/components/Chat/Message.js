@@ -1,5 +1,7 @@
 import React from 'react'
+import { values } from 'ramda'
 import Typography from 'material-ui/Typography'
+import { products } from '../../mdm'
 
 const messageStyles = {
   display: 'inline-flex',
@@ -27,17 +29,19 @@ const Message = ({
   currentUser,
   login,
 }) => {
+  const productName =
+    productId && values(products).find(({ id }) => id === productId).name
   switch (eventType) {
     case 'add to cart':
       return (
         <Typography variant="caption" align="center" style={CustomCaption}>
-          <b>{login}</b> добавляет <b>{productId}</b> к заказу
+          <b>{login}</b> добавляет <b>{productName}</b> к заказу
         </Typography>
       )
     case 'remove from cart':
       return (
         <Typography variant="caption" align="center" style={CustomCaption}>
-          <b>{login}</b> убирает <b>{productId}</b> из заказа
+          <b>{login}</b> убирает <b>{productName}</b> из заказа
         </Typography>
       )
     case 'order pay':
