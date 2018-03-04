@@ -30,13 +30,19 @@ jss
 const store = configureStore()
 
 if ('geolocation' in navigator) {
-  navigator.geolocation.watchPosition(({ coords }) =>
-    store.dispatch(
-      actions.updateSelfPosition({
-        x: coords.longitude,
-        y: coords.latitude,
+  navigator.geolocation.watchPosition(
+    ({ coords }) =>
+      store.dispatch(
+        actions.updateSelfPosition({
+          x: coords.longitude,
+          y: coords.latitude,
+        }),
+      ),
+    ({ code, message }) =>
+      store.dispatch({
+        type: 'error',
+        payload: { code, message },
       }),
-    ),
   )
 }
 
