@@ -11,13 +11,14 @@ import {
   getMyOrderChat,
   getMyOrderMembers,
   getUserId,
+  getMyOrderCartItems,
 } from '../../selectors'
 
 const styles = {
   chat: {
     display: 'flex',
     flexDirection: 'column',
-    height: '90%',
+    height: '100%',
   },
 }
 
@@ -26,6 +27,7 @@ const mapStateToProps = state => ({
   members: getMyOrderMembers(state) || {},
   chat: getMyOrderChat(state) || [],
   currentUser: getUserId(state) || null,
+  cartItems: getMyOrderCartItems(state) || {},
 })
 
 const enhance = compose(withStyles(styles), connect(mapStateToProps, actions))
@@ -56,16 +58,17 @@ class Chat extends Component {
     cancelOrderApprove(orderId)
   }
 
+  onSetPaySum = paySum => {
+    const { setPaySum, orderId } = this.props
+    setPaySum({ orderId, paySum })
+  }
+
   render() {
-    const { classes, members, chat, currentUser } = this.props
+    const { classes, members, chat, currentUser, cartItems } = this.props
 
     return (
       <div className={classes.chat}>
-        <Header
-          members={members}
-          onCancelOrder={this.onCancelOrder}
-          onOrderPay={this.onOrderPay}
-        />
+        <Header members={members} onCancelOrder={this.onCancelOrder} />
         <Body
           chat={chat}
           currentUser={currentUser}
@@ -74,8 +77,10 @@ class Chat extends Component {
         <Footer
           members={members}
           currentUser={currentUser}
+          cartItems={cartItems}
           onApprove={this.onOrderApprove}
           onCancelApprove={this.onCancelOrderApprove}
+          onSetPaySum={this.onSetPaySum}
         />
       </div>
     )

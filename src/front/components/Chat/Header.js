@@ -7,7 +7,6 @@ import Typography from 'material-ui/Typography'
 import CheckCircle from 'material-ui-icons/CheckCircle'
 import ExitToApp from 'material-ui-icons/ExitToApp'
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
-import Button from 'material-ui/Button'
 import Collapse from 'material-ui/transitions/Collapse'
 import IconButton from 'material-ui/IconButton'
 
@@ -94,15 +93,14 @@ class Header extends Component {
   }
 
   render() {
-    const { classes, members, onCancelOrder, onOrderPay } = this.props
+    const { classes, onCancelOrder } = this.props
     const { showMembers } = this.state
-    const disabledBtn = !Object.values(members).every(({ approve }) => approve)
 
     return (
       <div className={classes.flexColumn}>
         <div className={classes.flexRow}>
           <div className={classes.barStyles}>
-            <AppBar position="static" color="default">
+            <AppBar position="static" color="primary">
               <Toolbar>
                 <div className={classes.CustomToolbar}>
                   <Typography
@@ -122,15 +120,6 @@ class Header extends Component {
                         </IconButton>
                       </div>
                     </div>
-                    <Button
-                      className={classes.payBtn}
-                      variant="raised"
-                      color="primary"
-                      size="large"
-                      disabled={disabledBtn}
-                      onClick={onOrderPay}>
-                      ОПЛАТИТЬ
-                    </Button>
                     <div className={cx(classes.flexColumn, classes.center)}>
                       <KeyboardArrowDown
                         className={classes.outButton}
