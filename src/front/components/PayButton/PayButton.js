@@ -1,5 +1,6 @@
 /* @flow */
 
+import * as React from 'react'
 import { compose, defaultProps } from 'recompose'
 import { connect } from 'react-redux'
 
@@ -10,9 +11,10 @@ import * as store from '../../../front/store/reducers'
 import * as selectors from '../../../front/selectors'
 
 export const PayButton = compose(
-  connect(
+  (connect(
     (state: store.State) => ({
       currentOrderId: selectors.getMyOrderId(state),
+      isReadyToPay: selectors.isReadyToPay(state),
     }),
     dispatch => ({
       cancelOrder: () => compose(dispatch, actions.orderPay),
@@ -20,10 +22,10 @@ export const PayButton = compose(
     ({ currentOrderId }, { cancelOrder }) => ({
       onClick: currentOrderId && (() => cancelOrder(currentOrderId)),
     }),
-  ),
+  ): any),
   defaultProps({
     children: 'Оплатить',
     variant: 'raised',
     type: 'primary',
   }),
-)(Button)
+)(({ isReadyToPay, ...props }) => (isReadyToPay ? <Button {...props} /> : null))

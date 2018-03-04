@@ -1,6 +1,8 @@
 /* @flow */
 
-import { compose } from 'ramda'
+import { compose, values, map, sum, toPairs } from 'ramda'
+
+import { products } from './mdm'
 
 import type { State } from './store/reducers'
 import type { Chat } from '../types'
@@ -57,9 +59,47 @@ export const getMyOrderMembers: (state: State) => * = compose(
   getMyOrder,
 )
 
+export const getMyOrderMembersList: (state: State) => * = compose(
+  values,
+  getMyOrderMembers,
+)
+
+export const getReadyToPaySum: (state: State) => * = compose(
+  sum,
+  map(member => member.readyToPaySum),
+  getMyOrderMembersList,
+)
+
+export const isAllApproved: (state: State) => * = compose(
+  members => members.every(member => member.approve),
+  getMyOrderMembersList,
+)
+
+export const isAllPaid: (state: State) => * = compose(
+  members => members.every(member => member.paid),
+  getMyOrderMembersList,
+)
+
 export const getMyOrderCartItems: (state: State) => * = compose(
   order => (order ? order.cartItems : {}),
   getMyOrder,
+)
+
+export const getMyOrderCartItemsProductsSum: (state: State) => * = compose(
+  sum,
+  map(([key, count]: [string, number]) => products[key].price * count),
+  prod => prod.reduce((prev, next) => prev.concat(...next), []),
+  map(cartItem => cartItem.products.map(prod => toPairs(prod))),
+  values,
+  getMyOrderCartItems,
+)
+
+export const isReadyToPay: (state: State) => * = compose(
+  ({ cartSum, readyToPaySum }) => readyToPaySum >= cartSum,
+  (state: State) => ({
+    cartSum: getMyOrderCartItemsProductsSum(state),
+    readyToPaySum: getReadyToPaySum(state),
+  }),
 )
 
 export const getMyOrderChat: (state: State) => Chat = compose(
