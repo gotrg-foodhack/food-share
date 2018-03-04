@@ -4,10 +4,10 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import CheckCircle from 'material-ui-icons/CheckCircle'
-import ExitToApp from 'material-ui-icons/ExitToApp'
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import Collapse from 'material-ui/transitions/Collapse'
-import IconButton from 'material-ui/IconButton'
+
+import { OrderCancelButton } from '../OrderCancelButton'
 
 const styles = {
   barStyles: {
@@ -39,21 +39,18 @@ const styles = {
     textAlign: 'center',
   },
   membersList: {
-    position: 'absolute',
     backgroundColor: '#f5f5f5',
     fontSize: '21px',
-    width: '100%',
-    zIndex: 1200,
+    height: '120px',
     padding: '20px',
-    boxShadow:
-      '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+    overflow: 'auto',
   },
   memberRow: {
     display: 'flex',
     flexGrow: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '5px 10px',
+    padding: '20px',
   },
   outButton: {
     width: '45px',
@@ -86,7 +83,7 @@ class Header extends Component {
   }
 
   render() {
-    const { classes, onCancelOrder } = this.props
+    const { classes } = this.props
     const { showMembers } = this.state
 
     return (
@@ -99,12 +96,7 @@ class Header extends Component {
               color="primary">
               <Toolbar>
                 <div className={classes.CustomToolbar}>
-                  <IconButton>
-                    <ExitToApp
-                      className={classes.outButton}
-                      onClick={onCancelOrder}
-                    />
-                  </IconButton>
+                  <OrderCancelButton />
                   <Typography
                     className={classes.titleCustom}
                     variant="headline"
