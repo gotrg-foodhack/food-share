@@ -40,9 +40,9 @@ const styles = {
   },
   membersList: {
     backgroundColor: '#f5f5f5',
-    fontSize: '21px',
+    fontSize: '18px',
     height: '120px',
-    padding: '20px',
+    padding: '30px',
     overflow: 'auto',
   },
   memberRow: {
@@ -50,7 +50,7 @@ const styles = {
     flexGrow: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '20px',
+    marginBottom: '5px',
   },
   outButton: {
     width: '30px',
