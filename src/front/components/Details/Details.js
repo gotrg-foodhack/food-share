@@ -69,7 +69,7 @@ class Details extends Component {
           style={{ fontSize: '21px', padding: '10px 14px' }}
           variant="caption"
           align="left">
-          {userId === currentUser ? 'Ваш заказ:' : `${login} заказал:`}
+          {userId === currentUser ? 'Ваш заказ:' : `${login} заказал(а):`}
         </Typography>
         <Card>
           {products.map(product => {

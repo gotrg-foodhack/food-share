@@ -2,10 +2,9 @@
 import React, { Component } from 'react'
 import cx from 'classnames'
 import { withStyles } from 'material-ui/styles'
-import Button from 'material-ui/Button'
-import Message from './Message'
 import Send from 'material-ui-icons/Send'
 import IconButton from 'material-ui/IconButton'
+import Message from './Message'
 
 const styles = {
   chatBody: {
@@ -66,12 +65,13 @@ class Body extends Component {
   }
 
   renderMessages = () => {
-    const { chat } = this.props
+    const { chat, currentUser } = this.props
     return chat.map((message, idx) => (
       <Message
         key={`${message.userId}-${idx}`}
         index={idx}
         chat={chat}
+        currentUser={currentUser}
         {...message}
       />
     ))

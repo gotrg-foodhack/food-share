@@ -73,7 +73,9 @@ type CreateListener = (
   socket: Object,
 ) => (action: actions.Action, state: State) => Promise<void>
 
-const createListener: CreateListener = (dispatch, socket) => async action => {
+const createListener: CreateListener = (dispatch, socket) => async (
+  action: actions.Action,
+) => {
   const userFromPool: ?types.User = socketPool.get(socket)
 
   try {
@@ -133,6 +135,72 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
               },
             },
             chat: [],
+          }: types.NewOrder),
+        )
+
+        const orders = await getAllOrders()
+        dispatch(actions.ordersUpdate(orders), true)
+
+        break
+      }
+
+      case 'set pay sum': {
+        if (!userFromPool) return
+
+        const order = await getOrderById(action.payload.orderId)
+
+        if (!order) return
+
+        const { id: orderId, members, ...orderData } = order
+
+        const message: types.ChatEvent = {
+          eventType: 'set pay sum',
+          userId: userFromPool.id,
+          login: userFromPool.username,
+          paySum: action.payload.paySum,
+        }
+
+        const member = {
+          ...members[userFromPool.id],
+          paySum: action.payload.paySum,
+        }
+
+        await Order.findByIdAndUpdate(
+          orderId,
+          ({
+            ...orderData,
+            members: { ...members, [userFromPool.id]: member },
+            chat: order.chat.concat(message),
+          }: types.NewOrder),
+        )
+
+        const orders = await getAllOrders()
+        dispatch(actions.ordersUpdate(orders), true)
+
+        break
+      }
+
+      case 'chat message': {
+        if (!userFromPool) return
+
+        const order = await getOrderById(action.payload.orderId)
+
+        if (!order) return
+
+        const { id: orderId, ...orderData } = order
+
+        const message: types.ChatEvent = {
+          eventType: 'message',
+          userId: userFromPool.id,
+          login: userFromPool.username,
+          text: action.payload.message,
+        }
+
+        await Order.findByIdAndUpdate(
+          orderId,
+          ({
+            ...orderData,
+            chat: order.chat.concat(message),
           }: types.NewOrder),
         )
 

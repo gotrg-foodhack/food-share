@@ -44,7 +44,7 @@ const styles = () => ({
   priceSpan: {
     color: '#ff7043',
     fontWeight: 600,
-  }
+  },
 })
 
 const mapStateToProps = state => ({
@@ -77,14 +77,17 @@ class MediaControlCard extends Component {
           <div className={classes.details}>
             <CardContent className={classes.content}>
               <Typography variant="title"> {item.name} </Typography>
-              <Typography className={classes.priceSpan} variant="subheading" color="textSecondary">
+              <Typography
+                className={classes.priceSpan}
+                variant="subheading"
+                color="textSecondary">
                 {item.price}&nbsp;₽
               </Typography>
             </CardContent>
           </div>
           <div className={classes.button}>
             <IconButton>
-              <AddShoppingCartIcon className={classes.addIcon}/>
+              <AddShoppingCartIcon className={classes.addIcon} />
             </IconButton>
           </div>
         </Card>

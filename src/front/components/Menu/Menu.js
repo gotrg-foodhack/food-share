@@ -22,7 +22,8 @@ const styles = theme => ({
     fontSize: '21px',
     padding: '4px 14px',
     marginBottom: '10px',
-    boxShadow: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+    boxShadow:
+      '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
   },
   listStyle: {
     height: '90%',
@@ -40,7 +41,6 @@ const styles = theme => ({
   },
 })
 
-
 const enhance = compose(withRoot, withStyles(styles))
 
 const Menu = ({ classes }) => (
@@ -48,8 +48,12 @@ const Menu = ({ classes }) => (
     <List
       className={classes.listStyle}
       component="nav"
-      subheader={<ListSubheader className={classes.menuTitle} component="div">Меню</ListSubheader>}>
-      <MenuItems classes={classes} style={{paddingLeft: 0}}/>
+      subheader={
+        <ListSubheader className={classes.menuTitle} component="div">
+          Меню
+        </ListSubheader>
+      }>
+      <MenuItems classes={classes} />
     </List>
   </div>
 )

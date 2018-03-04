@@ -5,7 +5,7 @@ export type Coords = {
   y: number,
 }
 
-export type Chat = $ReadOnlyArray<
+export type ChatEvent =
   | {
       eventType: 'message',
       userId: string,
@@ -39,8 +39,9 @@ export type Chat = $ReadOnlyArray<
       eventType: 'join to order',
       userId: string,
       login: string,
-    },
->
+    }
+
+export type Chat = $ReadOnlyArray<ChatEvent>
 
 export type NewOrder = {
   coords: Coords,
