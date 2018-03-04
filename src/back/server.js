@@ -9,7 +9,8 @@ import socketIO from 'socket.io'
 import express from 'express'
 
 import * as actions from '../actions'
-import * as types from '../types'
+// eslint-disable-next-line prettier/prettier
+/* :: import * as types from '../types' */
 import type { State } from '../front/store/reducers'
 import connect from './mongo'
 import User from './models/User'
