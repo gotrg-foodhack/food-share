@@ -118,7 +118,7 @@ snacks.wings = {
 }
 
 snacks.rolls = {
-  id: 'newYorkCheasecake',
+  id: 'rolls',
   name: 'Рулетики с сыром, 8 шт',
   price: 145,
   photo: rolls,
