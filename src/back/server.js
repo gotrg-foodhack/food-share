@@ -211,7 +211,7 @@ const createListener: CreateListener = (dispatch, socket) => async (
               ...newOrder,
             }
 
-            await Order.findByIdAndUpdate(orderId, order)
+            await Order.findByIdAndUpdate(orderId, newOrder)
 
             const orders = await getAllOrders()
             dispatch(actions.ordersUpdate(orders), true)
