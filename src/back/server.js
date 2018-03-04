@@ -217,8 +217,8 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
 }
 
 io.on('connection', socket => {
-  const dispatch = <A: actions.Action>(action: A, broadcast?: boolean): A => {
-    if (broadcast) socket.broadcast.emit('action', action)
+  const dispatch = <A: actions.Action>(action: A, toAll?: boolean): A => {
+    if (toAll) io.emit('action', action)
     else socket.emit('action', action)
 
     return action
