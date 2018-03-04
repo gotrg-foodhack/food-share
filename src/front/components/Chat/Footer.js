@@ -14,6 +14,7 @@ import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
 import Tooltip from 'material-ui/Tooltip'
 import { PayButton } from '../PayButton'
+import SuccessDialog from './SuccessDialog'
 import { products } from '../../mdm'
 
 const styles = {
@@ -126,7 +127,12 @@ class Footer extends Component {
           id="tooltip-icon"
           title="Внесено / Сумма заказа (Осталось внести)">
           <div className={classes.secondRow} aria-label="money">
-            <Typography style={{ fontSize: '18px' }}>
+            <Typography
+              style={{
+                fontSize: '18px',
+                height: '36px',
+                lineHeight: '36px',
+              }}>
               {contributed} / {total}
             </Typography>
             <PayButton />
@@ -169,6 +175,7 @@ class Footer extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <SuccessDialog />
       </div>
     )
   }
