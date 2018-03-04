@@ -13,6 +13,21 @@ import * as store from '../../../front/store/reducers'
 import * as selectors from '../../../front/selectors'
 
 export const PayButton = compose(
+  withStyles({
+    button: {
+      color: 'white',
+      background: '#3f51b5',
+    },
+    buttonAwait: {
+      paddingLeft: 8,
+    },
+    spinner: {
+      color: 'white',
+      width: '20px !important',
+      height: '20px !important',
+      marginRight: '8px',
+    },
+  }),
   (connect(
     (state: store.State) => ({
       currentOrderId: selectors.getMyOrderId(state),
@@ -22,11 +37,15 @@ export const PayButton = compose(
     dispatch => ({
       orderPay: compose(dispatch, actions.orderPay),
     }),
-    ({ currentOrderId, isInPayTransaction, isReadyToPay }, { orderPay }) => ({
+    (
+      { currentOrderId, isInPayTransaction, isReadyToPay },
+      { orderPay },
+      { classes },
+    ) => ({
       isReadyToPay,
       children: isInPayTransaction ? (
         <React.Fragment>
-          <CircularProgress />
+          <CircularProgress className={classes.spinner} />
           Оплатить
         </React.Fragment>
       ) : (
@@ -34,19 +53,19 @@ export const PayButton = compose(
       ),
       disabled: isInPayTransaction,
       onClick: currentOrderId && (() => orderPay(currentOrderId)),
+      classes,
     }),
   ): any),
   defaultProps({
     variant: 'raised',
     type: 'primary',
   }),
-  withStyles({
-    button: {
-      color: 'white',
-      background: '#3f51b5',
-    },
-  }),
 )(
-  ({ isReadyToPay, classes, ...props }) =>
-    isReadyToPay ? <Button {...props} className={classes.button} /> : null,
+  ({ isReadyToPay, classes, isInPayTransaction, ...props }) =>
+    isReadyToPay ? (
+      <Button
+        {...props}
+        className={isInPayTransaction ? classes.buttonAwait : classes.button}
+      />
+    ) : null,
 )
