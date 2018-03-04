@@ -9,6 +9,7 @@ import socketIO from 'socket.io'
 import express from 'express'
 
 import * as actions from '../actions'
+import * as types from '../types'
 import type { State } from '../front/store/reducers'
 import connect from './mongo'
 import User from './models/User'
@@ -33,7 +34,7 @@ const socketPool = new WeakMap()
 
 app.use(express.static(staticPath))
 
-const getAllOrders = async () =>
+const getAllOrders = async (): Promise<$ReadOnlyArray<types.Order>> =>
   ((await Order.find().exec()) || []).map(
     ({ id, coords, owner, members, cartItems, chat }) => ({
       id,
@@ -45,13 +46,18 @@ const getAllOrders = async () =>
     }),
   )
 
+const removeFromObj = (obj, idForRemove) =>
+  Object.entries(obj)
+    .filter(([id]) => id !== idForRemove)
+    .map(([id, data]) => ({ [id]: data }))
+
 type CreateListener = (
   dispatch: <A: actions.Action>(action: A) => A,
   socket: Object,
 ) => (action: actions.Action, state: State) => Promise<void>
 
 const createListener: CreateListener = (dispatch, socket) => async action => {
-  const userFromPool = socketPool.get(socket)
+  const userFromPool: ?types.User = socketPool.get(socket)
 
   try {
     switch (action.type) {
@@ -105,6 +111,40 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
 
         const orders = await getAllOrders()
         dispatch(actions.ordersUpdate(orders))
+
+        break
+      }
+
+      case 'cancel order': {
+        if (!userFromPool) return
+
+        const order: ?types.Order = await Order.findById(action.payload)
+        if (!order) return
+
+        if (order.owner === userFromPool.id) {
+          await Order.findByIdAndRemove(order.id).exec()
+        } else {
+          const { id: orderId, ...orderData } = order
+          const members = removeFromObj(order.members, userFromPool.id)
+          const cartItems = removeFromObj(order.cartItems, userFromPool.id)
+          const chat = order.chat.concat({
+            eventType: 'cancel order',
+            userId: userFromPool.id,
+            login: userFromPool.username,
+          })
+
+          await Order.findByIdAndUpdate(orderId, {
+            ...orderData,
+            members,
+            cartItems,
+            chat,
+          })
+        }
+
+        const orders = await getAllOrders()
+        dispatch(actions.ordersUpdate(orders))
+
+        break
       }
     }
   } catch (err) {
