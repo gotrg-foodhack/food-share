@@ -100,7 +100,7 @@ class Header extends Component {
       <div className={classes.flexColumn}>
         <div className={classes.flexRow}>
           <div className={classes.barStyles}>
-            <AppBar position="static" color="primary">
+            <AppBar style={{background: '#ff7043'}} position="static" color="primary">
               <Toolbar>
                 <div className={classes.CustomToolbar}>
                   <Typography
