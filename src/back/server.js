@@ -52,7 +52,7 @@ const removeFromObj = (obj, idForRemove) =>
     .map(([id, data]) => ({ [id]: data }))
 
 type CreateListener = (
-  dispatch: <A: actions.Action>(action: A) => A,
+  dispatch: <A: actions.Action>(action: A, broadcast?: boolean) => A,
   socket: Object,
 ) => (action: actions.Action, state: State) => Promise<void>
 
@@ -81,6 +81,10 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
         socketPool.set(socket, { id, username, password })
 
         dispatch(actions.loginSuccess({ id, username }))
+
+        const orders = await getAllOrders()
+
+        dispatch(actions.ordersUpdate(orders))
         break
       }
 
@@ -116,7 +120,7 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
         )
 
         const orders = await getAllOrders()
-        dispatch(actions.ordersUpdate(orders))
+        dispatch(actions.ordersUpdate(orders), true)
 
         break
       }
@@ -148,7 +152,7 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
         }
 
         const orders = await getAllOrders()
-        dispatch(actions.ordersUpdate(orders))
+        dispatch(actions.ordersUpdate(orders), true)
 
         break
       }
@@ -187,7 +191,7 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
         })
 
         const orders = await getAllOrders()
-        dispatch(actions.ordersUpdate(orders))
+        dispatch(actions.ordersUpdate(orders), true)
 
         break
       }
@@ -199,8 +203,10 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
 }
 
 io.on('connection', socket => {
-  const dispatch = <A: actions.Action>(action: A): A => {
-    socket.emit('action', action)
+  const dispatch = <A: actions.Action>(action: A, broadcast?: boolean): A => {
+    if (broadcast) socket.broadcast.emit('action', action)
+    else socket.emit('action', action)
+
     return action
   }
 
