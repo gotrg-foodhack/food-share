@@ -123,7 +123,7 @@ export const isIOwner: (state: State) => * = compose(
 export const isReadyToPay: (state: State) => * = compose(
   ({ cartSum, readyToPaySum }) => readyToPaySum >= cartSum,
   (state: State) => ({
-    // cartSum: getMyOrderCartItemsProductsSum(state),
+    cartSum: getMyOrderCartItemsProductsSum(state),
     readyToPaySum: getReadyToPaySum(state),
     isIOwner: isIOwner(state),
   }),
