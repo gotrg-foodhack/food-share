@@ -54,6 +54,12 @@ export const getMyOrder: (state: State) => * = compose(
   }),
 )
 
+export const isInPayTransaction: (state: State) => * = compose(
+  Boolean,
+  order => order && order.inPayTransaction,
+  getMyOrder,
+)
+
 export const getMyOrderMembers: (state: State) => * = compose(
   order => (order ? order.members : {}),
   getMyOrder,
