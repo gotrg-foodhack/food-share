@@ -73,7 +73,9 @@ type CreateListener = (
   socket: Object,
 ) => (action: actions.Action, state: State) => Promise<void>
 
-const createListener: CreateListener = (dispatch, socket) => async action => {
+const createListener: CreateListener = (dispatch, socket) => async (
+  action: actions.Action,
+) => {
   const userFromPool: ?types.User = socketPool.get(socket)
 
   try {
@@ -133,6 +135,36 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
               },
             },
             chat: [],
+          }: types.NewOrder),
+        )
+
+        const orders = await getAllOrders()
+        dispatch(actions.ordersUpdate(orders), true)
+
+        break
+      }
+
+      case 'chat message': {
+        if (!userFromPool) return
+
+        const order = await getOrderById(action.payload.orderId)
+
+        if (!order) return
+
+        const { id: orderId, ...orderData } = order
+
+        const message: types.ChatEvent = {
+          eventType: 'message',
+          userId: userFromPool.id,
+          login: userFromPool.username,
+          text: action.payload.message,
+        }
+
+        await Order.findByIdAndUpdate(
+          orderId,
+          ({
+            ...orderData,
+            chat: order.chat.concat(message),
           }: types.NewOrder),
         )
 
