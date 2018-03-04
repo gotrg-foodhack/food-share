@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 
 import Button from 'material-ui/Button'
 import { CircularProgress } from 'material-ui/Progress'
+import { withStyles } from 'material-ui/styles'
 
 import * as actions from '../../../actions'
 import * as store from '../../../front/store/reducers'
@@ -39,4 +40,12 @@ export const PayButton = compose(
     variant: 'raised',
     type: 'primary',
   }),
-)(({ isReadyToPay, ...props }) => (isReadyToPay ? <Button {...props} /> : null))
+  withStyles({
+    button: {
+      color: 'white',
+      background: '#3f51b5',
+    },
+  }),
+)(({ isReadyToPay, classes, ...props }) => (
+  <Button {...props} className={classes.button} />
+))

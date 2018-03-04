@@ -19,7 +19,7 @@ const styles = {
     flexDirection: 'column',
     flexGrow: 1,
     justifyContent: 'flex-end',
-    fontSize: '21px',
+    fontSize: '18px',
     padding: '40px 0 20px 0',
   },
   chatArea: {
@@ -37,7 +37,7 @@ const styles = {
     border: '1px solid #ccc',
     resize: 'none',
     height: '40px',
-    width: '85%',
+    width: '80%',
     fontSize: '21px',
   },
   inputBtn: {
@@ -58,6 +58,14 @@ class Body extends Component {
     messageInput: '',
   }
 
+  componentDidMount() {
+    setTimeout(() => this.scrollToBottom(), 150)
+  }
+
+  componentDidUpdate() {
+    setTimeout(() => this.scrollToBottom(), 150)
+  }
+
   onInputChange = ({ target: { value } }) =>
     this.setState({ messageInput: value })
 
@@ -66,6 +74,12 @@ class Body extends Component {
     if (!messageInput.trim()) return
     this.props.onSendMessage(messageInput)
     this.setState({ messageInput: '' })
+  }
+
+  messagesEnd = null
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   renderMessages = () => {
@@ -91,6 +105,12 @@ class Body extends Component {
           <div className={cx(classes.chatMessages, classes.marginBetween)}>
             {this.renderMessages()}
           </div>
+          <div
+            style={{ float: 'left', clear: 'both' }}
+            ref={el => {
+              this.messagesEnd = el
+            }}
+          />
         </div>
         <div
           className={classes.flexRow}
@@ -99,7 +119,7 @@ class Body extends Component {
             position: 'fixed',
             background: '#ffffff',
             bottom: '23%',
-            paddingLeft: '3px',
+            paddingLeft: '20px',
             width: '100%',
           }}>
           <textarea
