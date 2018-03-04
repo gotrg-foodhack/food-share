@@ -62,10 +62,11 @@ const getOrderById = async (id: string): Promise<?types.Order> => {
   )
 }
 
-const removeFromObj = (obj, idForRemove): any =>
-  Object.entries(obj)
-    .filter(([id]) => id !== idForRemove)
-    .map(([id, data]) => ({ [id]: data }))
+const removeFromObj = <O>(obj: O, idForRemove): O => {
+  const clone = { ...obj }
+  delete clone[idForRemove]
+  return clone
+}
 
 type CreateListener = (
   dispatch: <A: actions.Action>(action: A, broadcast?: boolean) => A,
@@ -151,15 +152,8 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
           await Order.findByIdAndRemove(order.id).exec()
         } else {
           const { id: orderId, ...orderData } = order
-          const members: $PropertyType<types.Order, 'members'> = removeFromObj(
-            order.members,
-            userFromPool.id,
-          )
-
-          const cartItems: $PropertyType<
-            types.Order,
-            'cartItems',
-          > = removeFromObj(order.cartItems, userFromPool.id)
+          const members = removeFromObj(order.members, userFromPool.id)
+          const cartItems = removeFromObj(order.cartItems, userFromPool.id)
 
           const chat = order.chat.concat({
             eventType: 'cancel order',
