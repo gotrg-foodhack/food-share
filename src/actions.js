@@ -130,12 +130,18 @@ export type SetPaySum = {
   payload: { orderId: string, paySum: number },
 }
 
-export const setPaySum = (payload: {
+export const setPaySum = ({
+  orderId,
+  paySum,
+}: {
   orderId: string,
-  paySum: number,
+  paySum: number | string,
 }): SetPaySum => ({
   type: 'set pay sum',
-  payload,
+  payload: {
+    orderId,
+    paySum: Number(paySum),
+  },
 })
 
 export type OrderApprove = { type: 'order approve', payload: string }
