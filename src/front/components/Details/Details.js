@@ -20,7 +20,7 @@ const styles = {
   flexRow: {
     display: 'flex',
     maxWidth: '100%',
-    padding: '8px 4px',
+    padding: '10px',
     color: '#ffffff',
   },
   content: {

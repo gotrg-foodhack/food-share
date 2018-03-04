@@ -16,6 +16,7 @@ const messageStyles = {
 
 const CustomCaption = {
   fontSize: '18px',
+  padding: '5px 10px',
 }
 
 const Message = ({
