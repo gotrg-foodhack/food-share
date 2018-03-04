@@ -11,6 +11,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
+    height: '70%',
+    paddingBottom: '40px',
   },
   chatMessages: {
     display: 'flex',
@@ -93,8 +95,9 @@ class Body extends Component {
           style={{
             marginTop: '0px',
             position: 'fixed',
-            bottom: '25%',
-            left: '2%',
+            background: '#ffffff',
+            bottom: '23%',
+            paddingLeft: '3px',
             width: '100%',
           }}>
           <textarea

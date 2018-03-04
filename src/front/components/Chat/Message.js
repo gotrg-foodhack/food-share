@@ -4,6 +4,7 @@ import Typography from 'material-ui/Typography'
 const messageStyles = {
   display: 'inline-flex',
   maxWidth: '250px',
+  minWidth: '100px',
   padding: '10px 15px',
   backgroundColor: '#e6e6e6',
   borderRadius: '7px',
