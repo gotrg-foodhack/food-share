@@ -144,6 +144,35 @@ const createListener: CreateListener = (dispatch, socket) => async (
         break
       }
 
+      case 'order approve':
+      case 'cancel order approve': {
+        if (!userFromPool) return
+
+        const order = await getOrderById(action.payload)
+
+        if (!order) return
+
+        const { id: orderId, members, ...orderData } = order
+
+        const member = {
+          ...members[userFromPool.id],
+          approve: action.type === 'order approve',
+        }
+
+        await Order.findByIdAndUpdate(
+          orderId,
+          ({
+            ...orderData,
+            members: { ...members, [userFromPool.id]: member },
+          }: types.NewOrder),
+        )
+
+        const orders = await getAllOrders()
+        dispatch(actions.ordersUpdate(orders), true)
+
+        break
+      }
+
       case 'set pay sum': {
         if (!userFromPool) return
 
