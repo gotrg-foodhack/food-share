@@ -87,7 +87,10 @@ class MediaControlCard extends Component {
           </div>
           <div className={classes.button}>
             <IconButton>
-              <AddShoppingCartIcon className={classes.addIcon} />
+              <AddShoppingCartIcon
+                className={classes.addIcon}
+                onClick={this.onAddToCart}
+              />
             </IconButton>
           </div>
         </Card>
