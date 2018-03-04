@@ -5,7 +5,6 @@ import styled from 'styled-jss'
 import { connect } from 'react-redux'
 import { compose, withStateHandlers, withProps } from 'recompose'
 import TextField from 'material-ui/TextField'
-import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 
 import raccoon from './raccoon.png'
