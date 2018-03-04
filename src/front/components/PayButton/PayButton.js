@@ -46,6 +46,7 @@ export const PayButton = compose(
       background: '#3f51b5',
     },
   }),
-)(({ isReadyToPay, classes, ...props }) => (
-  <Button {...props} className={classes.button} />
-))
+)(
+  ({ isReadyToPay, classes, ...props }) =>
+    isReadyToPay ? <Button {...props} className={classes.button} /> : null,
+)
