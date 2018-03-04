@@ -118,7 +118,7 @@ snacks.wings = {
 }
 
 snacks.rolls = {
-  id: 'newYorkCheasecake',
+  id: 'rolls',
   name: 'Рулетики с сыром, 8 шт',
   price: 145,
   photo: rolls,
@@ -206,7 +206,7 @@ drinks.sprite = {
 }
 
 alcohol.montesodi = {
-  id: 'wine',
+  id: 'montesodi',
   name: 'Вино Montesodi, 0.75 л., 2012 г.',
   price: 5290,
   photo: montesodi,

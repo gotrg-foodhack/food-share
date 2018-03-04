@@ -34,6 +34,7 @@ const styles = theme => ({
   nested: {
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'stretch',
     padding: '5px 0',
     '& * + *': {
       marginTop: '10px',

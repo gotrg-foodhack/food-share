@@ -53,8 +53,9 @@ const styles = {
     padding: '20px',
   },
   outButton: {
-    width: '45px',
-    height: '45px',
+    width: '30px',
+    height: '30px',
+    margin: '0 8px',
   },
 }
 
@@ -94,7 +95,7 @@ class Header extends Component {
               style={{ background: '#ff7043' }}
               position="static"
               color="primary">
-              <Toolbar>
+              <Toolbar disableGutters>
                 <div className={classes.CustomToolbar}>
                   <OrderCancelButton />
                   <Typography

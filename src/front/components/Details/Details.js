@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
@@ -74,7 +75,7 @@ class Details extends Component {
           {userId === currentUser ? 'Ваш заказ:' : `${login} заказал(а):`}
         </Typography>
         <Card>
-          {products.map(product => {
+          {products.map((product, index) => {
             const { id, name, photo, price } =
               values(productsData).find(
                 ({ id: productId }) => product[productId],
@@ -82,12 +83,13 @@ class Details extends Component {
             const count = values(product)[0]
             return (
               <ProductDetails
-                key={userId + name}
+                key={userId + name + index}
                 classes={classes}
                 name={name}
                 price={price}
                 photo={photo}
                 count={count}
+                isOwner={userId === currentUser}
                 onRemove={() => this.onRemoveFromCart(id)}
               />
             )

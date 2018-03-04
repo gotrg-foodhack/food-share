@@ -20,9 +20,10 @@ const styles = {
   chatFooter: {
     display: 'flex',
     flexDirection: 'column',
+    flexShrink: 0,
   },
   firstRow: {
-    padding: '6px',
+    padding: '0 10px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -36,9 +37,19 @@ const styles = {
       marginLeft: '8px',
     },
   },
+  thirdRow: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 10px',
+    opacity: 0,
+    transition: 'opacity 0.1s ease-in',
+  },
+  show: {
+    opacity: 1,
+  },
   customSubtext: {
     outline: 'none',
-    fontSize: '21px',
+    fontSize: '18px',
     paddingTop: '10px',
   },
   dashed: {
@@ -83,7 +94,8 @@ class Footer extends Component {
       p.forEach(product => {
         const productName = keys(product)[0]
         const productCount = values(product)[0]
-        const { price } = values(products).find(({ id }) => id === productName)
+        const { price } =
+          values(products).find(({ id }) => id === productName) || {}
         total += productCount * price
       }),
     )
@@ -114,12 +126,19 @@ class Footer extends Component {
           id="tooltip-icon"
           title="Внесено / Сумма заказа (Осталось внести)">
           <div className={classes.secondRow} aria-label="money">
-            <Typography style={{ fontSize: '21px' }}>
-              {contributed} / {total} ({need})
+            <Typography style={{ fontSize: '18px' }}>
+              {contributed} / {total}
             </Typography>
             <PayButton />
           </div>
         </Tooltip>
+        <div
+          className={cx(classes.thirdRow, need < 0 && classes.show)}
+          aria-label="money">
+          <Typography style={{ fontSize: '12px' }}>
+            {-need} на чай курьеру
+          </Typography>
+        </div>
         <Dialog
           open={modal}
           onClose={this.toggleModal}

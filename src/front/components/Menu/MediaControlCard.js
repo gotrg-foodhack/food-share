@@ -15,13 +15,14 @@ const styles = () => ({
     position: 'relative',
     display: 'flex',
     padding: '0 10px',
-    width: '300px',
+    // width: '300px',
     margin: '0 auto',
   },
   details: {
     display: 'flex',
     alignItems: 'center',
     width: '150px',
+    flexGrow: 1,
   },
   cartImg: {
     display: 'flex',
@@ -84,11 +85,8 @@ class MediaControlCard extends Component {
             </CardContent>
           </div>
           <div className={classes.button}>
-            <IconButton>
-              <AddShoppingCartIcon
-                className={classes.addIcon}
-                onClick={this.onAddToCart}
-              />
+            <IconButton onClick={this.onAddToCart}>
+              <AddShoppingCartIcon className={classes.addIcon} />
             </IconButton>
           </div>
         </Card>

@@ -19,9 +19,10 @@ export const PayButton = compose(
       isInPayTransaction: selectors.isInPayTransaction(state),
     }),
     dispatch => ({
-      cancelOrder: () => compose(dispatch, actions.orderPay),
+      orderPay: compose(dispatch, actions.orderPay),
     }),
-    ({ currentOrderId }, { cancelOrder, isInPayTransaction }) => ({
+    ({ currentOrderId, isInPayTransaction, isReadyToPay }, { orderPay }) => ({
+      isReadyToPay,
       children: isInPayTransaction ? (
         <React.Fragment>
           <CircularProgress />
@@ -31,11 +32,10 @@ export const PayButton = compose(
         'Оплатить'
       ),
       disabled: isInPayTransaction,
-      onClick: currentOrderId && (() => cancelOrder(currentOrderId)),
+      onClick: currentOrderId && (() => orderPay(currentOrderId)),
     }),
   ): any),
   defaultProps({
-    children: 'Оплатить',
     variant: 'raised',
     type: 'primary',
   }),

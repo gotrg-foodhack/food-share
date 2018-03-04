@@ -179,14 +179,14 @@ const createListener: CreateListener = (dispatch, socket) => async (
       case 'order pay': {
         if (!userFromPool) return
 
-        const order = await getOrderById(action.payload)
+        let order: any = await getOrderById(action.payload)
 
         if (!order) return
 
-        const { id: orderId, members, ...orderData } = order
-
-        toPairs(members).forEach(([userId, oldMember]) =>
+        toPairs(order.members).forEach(([userId, oldMember]) =>
           setTimeout(async () => {
+            const { id: orderId, members: oldMembers, ...orderData } = order
+
             const message: types.ChatEvent = {
               eventType: 'order pay',
               userId,
@@ -195,21 +195,23 @@ const createListener: CreateListener = (dispatch, socket) => async (
             }
 
             const member = { ...oldMember, paid: true }
+            const members = { ...oldMembers, [userId]: member }
 
             const newOrder: types.NewOrder = {
               ...orderData,
-              members: { ...members, [userId]: member },
+              members,
+              inPayTransaction: !values(members).every(
+                currentMember => currentMember.paid,
+              ),
               chat: order.chat.concat(message),
             }
 
-            const inPayTransaction = !values(newOrder.members).every(
-              currentMember => currentMember.paid,
-            )
-
-            await Order.findByIdAndUpdate(orderId, {
+            order = {
+              id: orderId,
               ...newOrder,
-              inPayTransaction,
-            })
+            }
+
+            await Order.findByIdAndUpdate(orderId, order)
 
             const orders = await getAllOrders()
             dispatch(actions.ordersUpdate(orders), true)
