@@ -58,6 +58,14 @@ class Body extends Component {
     messageInput: '',
   }
 
+  componentDidMount() {
+    setTimeout(() => this.scrollToBottom(), 150)
+  }
+
+  componentDidUpdate() {
+    setTimeout(() => this.scrollToBottom(), 150)
+  }
+
   onInputChange = ({ target: { value } }) =>
     this.setState({ messageInput: value })
 
@@ -66,6 +74,12 @@ class Body extends Component {
     if (!messageInput.trim()) return
     this.props.onSendMessage(messageInput)
     this.setState({ messageInput: '' })
+  }
+
+  messagesEnd = null
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   renderMessages = () => {
@@ -91,6 +105,12 @@ class Body extends Component {
           <div className={cx(classes.chatMessages, classes.marginBetween)}>
             {this.renderMessages()}
           </div>
+          <div
+            style={{ float: 'left', clear: 'both' }}
+            ref={el => {
+              this.messagesEnd = el
+            }}
+          />
         </div>
         <div
           className={classes.flexRow}
