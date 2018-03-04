@@ -89,6 +89,7 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
         await Order.findByIdAndUpdate(id, {
           members: {
             [userFromPool.id]: {
+              login: userFromPool.username,
               approve: false,
               readyToPaySum: 0,
               paid: false,

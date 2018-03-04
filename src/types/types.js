@@ -41,9 +41,9 @@ export type Order = {
   id: string,
   coords: Coords,
   owner: string, // User.id
-  ownerLogin: string,
   members: {
     [userId: string]: {
+      login: string,
       approve: boolean,
       readyToPaySum: number,
       paid: boolean,
@@ -56,4 +56,10 @@ export type Order = {
     },
   },
   chat: Chat,
+}
+
+export type User = {
+  id: string,
+  username: string,
+  password: string,
 }
