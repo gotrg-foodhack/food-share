@@ -24,6 +24,10 @@ const styles = {
   titleCustom: {
     textAlign: 'center',
   },
+  subTitleCustom: {
+    textAlign: 'center',
+    fontSize: '14px',
+  },
   flexRow: {
     display: 'flex',
     alignItems: 'normal',
@@ -84,9 +88,9 @@ class Header extends Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, members } = this.props
     const { showMembers } = this.state
-
+    const peopleCount = Object.keys(members).length
     return (
       <div className={classes.flexColumn}>
         <div className={classes.flexRow}>
@@ -98,12 +102,20 @@ class Header extends Component {
               <Toolbar disableGutters>
                 <div className={classes.CustomToolbar}>
                   <OrderCancelButton />
-                  <Typography
-                    className={classes.titleCustom}
-                    variant="headline"
-                    color="inherit">
-                    Ваш заказ
-                  </Typography>
+                  <div>
+                    <Typography
+                      className={classes.titleCustom}
+                      variant="headline"
+                      color="inherit">
+                      Ваш заказ
+                    </Typography>
+                    <Typography
+                      className={classes.subTitleCustom}
+                      variant="subheading"
+                      color="inherit">
+                      человек в чате: {peopleCount}
+                    </Typography>
+                  </div>
                   <KeyboardArrowDown
                     className={classes.outButton}
                     onClick={this.toggleCollapse}
