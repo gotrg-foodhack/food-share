@@ -23,7 +23,7 @@ const mapSectionToIcon = {
 }
 
 const style = {
-  padding: '26px 10px'
+  padding: '26px 10px',
 }
 
 class MenuItems extends React.Component {
@@ -53,7 +53,11 @@ class MenuItems extends React.Component {
       <div key={section}>
         <ListItem style={style} onClick={() => this.handleClick(section)}>
           <ListItemIcon>{mapSectionToIcon[section]}</ListItemIcon>
-          <ListItemText primary={<div style={{fontSize: '26px'}}> {menu[section].name} </div>} />
+          <ListItemText
+            primary={
+              <div style={{ fontSize: '26px' }}> {menu[section].name} </div>
+            }
+          />
           {this.state[`${section}Open`] ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse
