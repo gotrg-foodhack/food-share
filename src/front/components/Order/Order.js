@@ -24,6 +24,7 @@ export class Order extends Component {
   getStyle = number => ({
     display: this.state.activeTab === number ? 'block' : 'none',
     height: '90%',
+    overflow: 'auto',
   })
 
   render() {
