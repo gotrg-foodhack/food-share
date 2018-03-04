@@ -229,7 +229,7 @@ const createListener: CreateListener = (dispatch, socket) => async (
 
         const member = {
           ...members[userFromPool.id],
-          paySum: action.payload.paySum,
+          readyToPaySum: action.payload.paySum,
         }
 
         await Order.findByIdAndUpdate(
