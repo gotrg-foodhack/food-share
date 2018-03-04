@@ -11,6 +11,7 @@ import { getMyOrderId } from '../../selectors'
 
 const styles = () => ({
   card: {
+    boxShadow: 'none',
     position: 'relative',
     display: 'flex',
     padding: '0 10px',
