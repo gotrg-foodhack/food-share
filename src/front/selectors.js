@@ -94,14 +94,6 @@ export const getMyOrderCartItemsProductsSum: (state: State) => * = compose(
   getMyOrderCartItems,
 )
 
-export const isReadyToPay: (state: State) => * = compose(
-  ({ cartSum, readyToPaySum }) => readyToPaySum >= cartSum,
-  (state: State) => ({
-    cartSum: getMyOrderCartItemsProductsSum(state),
-    readyToPaySum: getReadyToPaySum(state),
-  }),
-)
-
 export const getMyOrderChat: (state: State) => Chat = compose(
   order => (order ? order.chat : []),
   getMyOrder,
@@ -119,5 +111,14 @@ export const isIOwner: (state: State) => * = compose(
   state => ({
     myOrder: getMyOrder(state),
     userId: getUserId(state),
+  }),
+)
+
+export const isReadyToPay: (state: State) => * = compose(
+  ({ cartSum, readyToPaySum }) => readyToPaySum >= cartSum,
+  (state: State) => ({
+    cartSum: getMyOrderCartItemsProductsSum(state),
+    readyToPaySum: getReadyToPaySum(state),
+    isIOwner: isIOwner(state),
   }),
 )
