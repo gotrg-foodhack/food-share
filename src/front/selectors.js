@@ -56,7 +56,7 @@ export const getMyOrder: (state: State) => * = compose(
 
 export const isInPayTransaction: (state: State) => * = compose(
   Boolean,
-  order => console.log(order) || (order && order.inPayTransaction),
+  order => order && order.inPayTransaction,
   getMyOrder,
 )
 
