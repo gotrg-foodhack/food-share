@@ -19,10 +19,9 @@ export const OrderCancelButton = compose(
     dispatch => ({
       cancelOrder: compose(dispatch, actions.cancelOrder),
     }),
-    ({ currentOrderId }, { cancelOrder }) =>
-      console.log(currentOrderId, cancelOrder) || {
-        onClick: currentOrderId && (() => cancelOrder(currentOrderId)),
-      },
+    ({ currentOrderId }, { cancelOrder }) => ({
+      onClick: currentOrderId && (() => cancelOrder(currentOrderId)),
+    }),
   ),
   withProps({
     children: <ExitToApp />,
