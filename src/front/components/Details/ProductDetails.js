@@ -1,6 +1,7 @@
 import React from 'react'
 import { CardContent, CardMedia } from 'material-ui/Card'
 import Typography from 'material-ui/Typography/Typography'
+import IconButton from 'material-ui/IconButton'
 import RemoveShoppingCart from 'material-ui-icons/RemoveShoppingCart'
 
 const ProductDetails = ({
