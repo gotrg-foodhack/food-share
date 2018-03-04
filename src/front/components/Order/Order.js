@@ -46,9 +46,9 @@ export class Order extends Component {
           textColor="primary"
           style={navStyle}
           fullWidth>
-          <Tab label="Чат" />
-          <Tab label="Детали заказа" />
-          <Tab label="Меню" href="#basic-tabs" />
+          <Tab label={<div style={{fontSize: '1rem'}}>{"Чат"}</div>} />
+          <Tab label={<div style={{fontSize: '1rem'}}>{"Детали заказа"}</div>} />
+          <Tab label={<div style={{fontSize: '1rem'}}>{"Меню"}</div>} href="#basic-tabs" />
         </Tabs>
       </div>
     )
