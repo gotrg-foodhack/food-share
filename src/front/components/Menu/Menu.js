@@ -28,10 +28,13 @@ const styles = theme => ({
   listStyle: {
     height: '90%',
   },
+  listMenu: {
+    padding: '0 10px',
+  },
   nested: {
     display: 'flex',
     flexDirection: 'column',
-    paddingLeft: theme.spacing.unit * 4,
+    padding: '5px 0',
     '& * + *': {
       marginTop: '10px',
     },

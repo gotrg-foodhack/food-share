@@ -15,6 +15,7 @@ const styles = () => ({
     display: 'flex',
     padding: '0 10px',
     width: '300px',
+    margin: '0 auto',
   },
   details: {
     display: 'flex',
