@@ -88,7 +88,7 @@ class Body extends Component {
             {this.renderMessages()}
           </div>
         </div>
-        <div className={classes.flexRow} style={{ marginTop: '0px' }}>
+        <div className={classes.flexRow} style={{ marginTop: '0px', position: 'fixed', bottom: '25%', left: '2%', width: '100%' }}>
           <textarea
             className={classes.input}
             value={messageInput}

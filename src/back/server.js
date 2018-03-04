@@ -46,7 +46,7 @@ const getAllOrders = async (): Promise<$ReadOnlyArray<types.Order>> =>
     }),
   )
 
-const removeFromObj = (obj, idForRemove) =>
+const removeFromObj = (obj, idForRemove): any =>
   Object.entries(obj)
     .filter(([id]) => id !== idForRemove)
     .map(([id, data]) => ({ [id]: data }))
@@ -135,20 +135,31 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
           await Order.findByIdAndRemove(order.id).exec()
         } else {
           const { id: orderId, ...orderData } = order
-          const members = removeFromObj(order.members, userFromPool.id)
-          const cartItems = removeFromObj(order.cartItems, userFromPool.id)
+          const members: $PropertyType<types.Order, 'members'> = removeFromObj(
+            order.members,
+            userFromPool.id,
+          )
+
+          const cartItems: $PropertyType<
+            types.Order,
+            'cartItems',
+          > = removeFromObj(order.cartItems, userFromPool.id)
+
           const chat = order.chat.concat({
             eventType: 'cancel order',
             userId: userFromPool.id,
             login: userFromPool.username,
           })
 
-          await Order.findByIdAndUpdate(orderId, {
-            ...orderData,
-            members,
-            cartItems,
-            chat,
-          })
+          await Order.findByIdAndUpdate(
+            orderId,
+            ({
+              ...orderData,
+              members,
+              cartItems,
+              chat,
+            }: types.NewOrder),
+          )
         }
 
         const orders = await getAllOrders()
@@ -183,12 +194,15 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
           login: userFromPool.username,
         }
 
-        await Order.findByIdAndUpdate(orderId, {
-          ...orderData,
-          members: { ...order.members, [userFromPool.id]: member },
-          cartItems: { ...order.members, [userFromPool.id]: cartItem },
-          chat: order.chat.concat(message),
-        })
+        await Order.findByIdAndUpdate(
+          orderId,
+          ({
+            ...orderData,
+            members: { ...order.members, [userFromPool.id]: member },
+            cartItems: { ...order.members, [userFromPool.id]: cartItem },
+            chat: order.chat.concat(message),
+          }: types.NewOrder),
+        )
 
         const orders = await getAllOrders()
         dispatch(actions.ordersUpdate(orders), true)
@@ -203,8 +217,8 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
 }
 
 io.on('connection', socket => {
-  const dispatch = <A: actions.Action>(action: A, broadcast?: boolean): A => {
-    if (broadcast) socket.broadcast.emit('action', action)
+  const dispatch = <A: actions.Action>(action: A, toAll?: boolean): A => {
+    if (toAll) io.emit('action', action)
     else socket.emit('action', action)
 
     return action

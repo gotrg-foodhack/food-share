@@ -16,11 +16,13 @@ const styles = theme => ({
   },
   menuTitle: {
     width: '100%',
-    // backgroundColor: '#002984',
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    background: '#ff7043',
     color: '#ffffff',
     position: 'relative',
     fontSize: '21px',
+    padding: '4px 14px',
+    marginBottom: '10px',
+    boxShadow: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
   },
   listStyle: {
     height: '90%',
