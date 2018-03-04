@@ -21,8 +21,8 @@ const AccountCircleIcon = styled(AccountCircle)({
 })
 
 export const Avatar = styled(MUIAvatar)({
-  width: 48 * 2,
-  height: 48 * 2,
+  width: 48 * 1.5,
+  height: 48 * 1.5,
 })
 
 export const UserAvatar = ({ order }: { order: Order }) => {
