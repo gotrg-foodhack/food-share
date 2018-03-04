@@ -1,5 +1,6 @@
 import React from 'react'
 import { values, keys } from 'ramda'
+import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import Collapse from 'material-ui/transitions/Collapse'
 import LocalBarIcon from 'material-ui-icons/LocalBar'
@@ -20,10 +21,6 @@ const mapSectionToIcon = {
   desserts: <CakeIcon />,
   snacks: <LocalDiningIcon />,
   combo: <People />,
-}
-
-const style = {
-  padding: '20px 10px',
 }
 
 class MenuItems extends React.Component {
@@ -50,8 +47,10 @@ class MenuItems extends React.Component {
   render() {
     const { classes } = this.props
     return keys(menu).map(section => (
-      <div key={section}>
-        <ListItem style={style} onClick={() => this.handleClick(section)}>
+      <React.Fragment key={section}>
+        <ListItem
+          className={classes.listItem}
+          onClick={() => this.handleClick(section)}>
           <ListItemIcon>{mapSectionToIcon[section]}</ListItemIcon>
           <ListItemText
             primary={
@@ -70,9 +69,21 @@ class MenuItems extends React.Component {
             </ListItem>
           </List>
         </Collapse>
-      </div>
+      </React.Fragment>
     ))
   }
 }
 
-export default MenuItems
+export default withStyles({
+  root: {},
+  textItem: {},
+  menuTitle: {},
+  listStyle: {},
+  listMenu: {},
+  listItem: {
+    padding: '20px 10px',
+    boxSizing: 'border-box',
+    width: '100%',
+  },
+  nested: {},
+})(MenuItems)
