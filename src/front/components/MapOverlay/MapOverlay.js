@@ -42,12 +42,6 @@ export const ApproveCreatingOrderButton = compose(
 )(Button)
 
 export const StartCreatingOrderButton = compose(
-  withStyles(
-    theme =>
-      console.log(theme) || {
-        root: {},
-      },
-  ),
   withProps({
     color: 'secondary',
     variant: 'fab',
@@ -105,7 +99,7 @@ const LocationButton = compose(
     ({ mapCenter, selfPosition }, { setMapCenter }) => ({
       mapCenter,
       selfPosition,
-      onClick: () => console.log(selfPosition) || setMapCenter(selfPosition),
+      onClick: () => setMapCenter(selfPosition),
     }),
   ): any),
   withStyles({
