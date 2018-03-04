@@ -15,7 +15,7 @@ import perlmutter from './perlmutter.jpg'
 
 export const avatars = { maxim, oleg, pavlik, perlmutter }
 
-const AccountCircleIcon = styled(AccountCircle)({
+export const AccountCircleIcon = styled(AccountCircle)({
   width: '100%',
   height: '100%',
 })

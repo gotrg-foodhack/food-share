@@ -170,7 +170,7 @@ class Footer extends Component {
               onClick={this.onSetPaySum}
               color="primary"
               autoFocus
-              disabled={!Number.isInteger(+inputMoney)}>
+              disabled={!Number.isInteger(+inputMoney) || +inputMoney === 0}>
               Ок
             </Button>
           </DialogActions>

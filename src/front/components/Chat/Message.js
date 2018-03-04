@@ -1,7 +1,35 @@
 import React from 'react'
 import { values } from 'ramda'
+import styled from 'styled-jss'
+import MUIAvatar from 'material-ui/Avatar'
+import AccountCircle from 'material-ui-icons/AccountCircle'
 import Typography from 'material-ui/Typography'
+import maxim from '../Map/avatars/maxim.jpg'
+import oleg from '../Map/avatars/oleg.jpg'
+import pavlik from '../Map/avatars/pavlik.jpg'
+import perlmutter from '../Map/avatars/perlmutter.jpg'
 import { products } from '../../mdm'
+
+const avatars = { maxim, oleg, pavlik, perlmutter }
+
+const AccountCircleIcon = styled(AccountCircle)({
+  width: '50%',
+  height: '50%',
+})
+
+const Avatar = styled(MUIAvatar)({
+  width: 48 * 0.5,
+  height: 48 * 0.5,
+  marginBottom: '5px',
+})
+
+const loginRowStyles = {
+  display: 'flex',
+  alignItems: 'flex-end',
+  '& * + *': {
+    marginLeft: '4px',
+  },
+}
 
 const messageStyles = {
   display: 'inline-flex',
@@ -72,12 +100,23 @@ const Message = ({
 
     default: {
       const owner = userId === currentUser
-      const withoutCaption = index > 0 && chat[index - 1].userId === userId
+      const withoutCaption =
+        index > 0 &&
+        chat[index - 1].userId === userId &&
+        chat[index - 1].eventType === eventType
+      const src = avatars[login]
 
       return (
         <div style={{ margin: '0 6px', alignSelf: owner && 'flex-end' }}>
           {!withoutCaption && (
-            <div>
+            <div style={loginRowStyles}>
+              {src ? (
+                <Avatar src={src} alt={login} />
+              ) : (
+                <Avatar alt={login}>
+                  <AccountCircleIcon />
+                </Avatar>
+              )}
               <Typography variant="caption" align="left" style={CustomCaption}>
                 {login}
               </Typography>
