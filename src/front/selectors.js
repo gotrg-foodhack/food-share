@@ -85,13 +85,21 @@ export const getMyOrderCartItems: (state: State) => * = compose(
   getMyOrder,
 )
 
-export const getMyOrderCartItemsProducts: (state: State) => * = compose(
+export const getMyOrderCartItemsProductsSum: (state: State) => * = compose(
   sum,
   map(([key, count]: [string, number]) => products[key].price * count),
   prod => prod.reduce((prev, next) => prev.concat(...next), []),
   map(cartItem => cartItem.products.map(prod => toPairs(prod))),
   values,
   getMyOrderCartItems,
+)
+
+export const isReadyToPay: (state: State) => * = compose(
+  ({ cartSum, readyToPaySum }) => readyToPaySum >= cartSum,
+  (state: State) => ({
+    cartSum: getMyOrderCartItemsProductsSum(state),
+    readyToPaySum: getReadyToPaySum(state),
+  }),
 )
 
 export const getMyOrderChat: (state: State) => Chat = compose(
