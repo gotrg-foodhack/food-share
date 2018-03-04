@@ -56,7 +56,7 @@ export const getMyOrder: (state: State) => * = compose(
 
 export const isInPayTransaction: (state: State) => * = compose(
   Boolean,
-  order => order && order.inPayTransaction,
+  order => console.log(order) || (order && order.inPayTransaction),
   getMyOrder,
 )
 
@@ -113,7 +113,7 @@ export const getMyOrderId: (state: State) => * = compose(
 )
 
 export const isIOwner: (state: State) => * = compose(
-  ({ myOrder, userId }) => !!(myOrder && myOrder.id === userId),
+  ({ myOrder, userId }) => !!(myOrder && myOrder.owner === userId),
   state => ({
     myOrder: getMyOrder(state),
     userId: getUserId(state),
@@ -121,10 +121,13 @@ export const isIOwner: (state: State) => * = compose(
 )
 
 export const isReadyToPay: (state: State) => * = compose(
-  ({ cartSum, readyToPaySum }) => readyToPaySum >= cartSum,
+  // eslint-disable-next-line
+  ({ cartSum, readyToPaySum, isIOwner, isAllApproved }) =>
+    isIOwner && isAllApproved && readyToPaySum >= cartSum,
   (state: State) => ({
     cartSum: getMyOrderCartItemsProductsSum(state),
     readyToPaySum: getReadyToPaySum(state),
     isIOwner: isIOwner(state),
+    isAllApproved: isAllApproved(state),
   }),
 )
