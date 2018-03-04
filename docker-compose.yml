@@ -20,5 +20,7 @@ services:
   db:
     image: mongo:3.6.3
     container_name: omnomnom-mongo
+    ports:
+      - 27017:27017
     volumes:
       - ./mongo:/data/db

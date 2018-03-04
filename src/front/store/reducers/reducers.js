@@ -4,7 +4,6 @@ import { combineReducers } from 'redux'
 
 import * as actions from '../../../actions'
 import * as types from '../../../types'
-import ordersData from './data'
 
 import {
   type State as SelfPosition,
@@ -17,7 +16,7 @@ export type { SelfPosition, MapCenter }
 export type Orders = $ReadOnlyArray<types.Order>
 
 export const orders = (
-  state: Orders = ordersData,
+  state: Orders = [],
   action: actions.OrdersUpdate,
 ): Orders => {
   switch (action.type) {

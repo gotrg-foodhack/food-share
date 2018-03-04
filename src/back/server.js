@@ -46,13 +46,13 @@ const getAllOrders = async (): Promise<$ReadOnlyArray<types.Order>> =>
     }),
   )
 
-const removeFromObj = (obj, idForRemove) =>
+const removeFromObj = (obj, idForRemove): any =>
   Object.entries(obj)
     .filter(([id]) => id !== idForRemove)
     .map(([id, data]) => ({ [id]: data }))
 
 type CreateListener = (
-  dispatch: <A: actions.Action>(action: A) => A,
+  dispatch: <A: actions.Action>(action: A, broadcast?: boolean) => A,
   socket: Object,
 ) => (action: actions.Action, state: State) => Promise<void>
 
@@ -81,6 +81,10 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
         socketPool.set(socket, { id, username, password })
 
         dispatch(actions.loginSuccess({ id, username }))
+
+        const orders = await getAllOrders()
+
+        dispatch(actions.ordersUpdate(orders))
         break
       }
 
@@ -92,25 +96,31 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
           owner: userFromPool.id,
         })
 
-        await Order.findByIdAndUpdate(id, {
-          members: {
-            [userFromPool.id]: {
-              login: userFromPool.username,
-              approve: false,
-              readyToPaySum: 0,
-              paid: false,
+        await Order.findByIdAndUpdate(
+          id,
+          ({
+            owner: userFromPool.id,
+            coords: action.payload,
+            members: {
+              [userFromPool.id]: {
+                login: userFromPool.username,
+                approve: false,
+                readyToPaySum: 0,
+                paid: false,
+              },
             },
-          },
-          cartItems: {
-            [userFromPool.id]: {
-              login: userFromPool.username,
-              products: [],
+            cartItems: {
+              [userFromPool.id]: {
+                login: userFromPool.username,
+                products: [],
+              },
             },
-          },
-        })
+            chat: [],
+          }: types.NewOrder),
+        )
 
         const orders = await getAllOrders()
-        dispatch(actions.ordersUpdate(orders))
+        dispatch(actions.ordersUpdate(orders), true)
 
         break
       }
@@ -125,24 +135,77 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
           await Order.findByIdAndRemove(order.id).exec()
         } else {
           const { id: orderId, ...orderData } = order
-          const members = removeFromObj(order.members, userFromPool.id)
-          const cartItems = removeFromObj(order.cartItems, userFromPool.id)
+          const members: $PropertyType<types.Order, 'members'> = removeFromObj(
+            order.members,
+            userFromPool.id,
+          )
+
+          const cartItems: $PropertyType<
+            types.Order,
+            'cartItems',
+          > = removeFromObj(order.cartItems, userFromPool.id)
+
           const chat = order.chat.concat({
             eventType: 'cancel order',
             userId: userFromPool.id,
             login: userFromPool.username,
           })
 
-          await Order.findByIdAndUpdate(orderId, {
-            ...orderData,
-            members,
-            cartItems,
-            chat,
-          })
+          await Order.findByIdAndUpdate(
+            orderId,
+            ({
+              ...orderData,
+              members,
+              cartItems,
+              chat,
+            }: types.NewOrder),
+          )
         }
 
         const orders = await getAllOrders()
-        dispatch(actions.ordersUpdate(orders))
+        dispatch(actions.ordersUpdate(orders), true)
+
+        break
+      }
+
+      case 'join to order': {
+        if (!userFromPool) return
+
+        const order: ?types.Order = await Order.findById(action.payload)
+        if (!order) return
+
+        const { id: orderId, ...orderData } = order
+
+        const member = {
+          login: userFromPool.username,
+          approve: false,
+          readyToPaySum: 0,
+          paid: false,
+        }
+
+        const cartItem = {
+          login: userFromPool.username,
+          products: [],
+        }
+
+        const message = {
+          eventType: 'join to order',
+          userId: userFromPool.id,
+          login: userFromPool.username,
+        }
+
+        await Order.findByIdAndUpdate(
+          orderId,
+          ({
+            ...orderData,
+            members: { ...order.members, [userFromPool.id]: member },
+            cartItems: { ...order.members, [userFromPool.id]: cartItem },
+            chat: order.chat.concat(message),
+          }: types.NewOrder),
+        )
+
+        const orders = await getAllOrders()
+        dispatch(actions.ordersUpdate(orders), true)
 
         break
       }
@@ -154,8 +217,10 @@ const createListener: CreateListener = (dispatch, socket) => async action => {
 }
 
 io.on('connection', socket => {
-  const dispatch = <A: actions.Action>(action: A): A => {
-    socket.emit('action', action)
+  const dispatch = <A: actions.Action>(action: A, toAll?: boolean): A => {
+    if (toAll) io.emit('action', action)
+    else socket.emit('action', action)
+
     return action
   }
 

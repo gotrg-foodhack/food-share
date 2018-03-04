@@ -34,11 +34,15 @@ export type Chat = $ReadOnlyArray<
       eventType: 'cancel order',
       userId: string,
       login: string,
+    }
+  | {
+      eventType: 'join to order',
+      userId: string,
+      login: string,
     },
 >
 
-export type Order = {
-  id: string,
+export type NewOrder = {
   coords: Coords,
   owner: string, // User.id
   members: {
@@ -56,6 +60,12 @@ export type Order = {
     },
   },
   chat: Chat,
+}
+
+export type Order = {
+  id: string,
+  // eslint-disable-next-line
+  /* :: ...$Exact<NewOrder> */
 }
 
 export type User = {
