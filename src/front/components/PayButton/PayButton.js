@@ -21,7 +21,11 @@ export const PayButton = compose(
     dispatch => ({
       cancelOrder: () => compose(dispatch, actions.orderPay),
     }),
-    ({ currentOrderId }, { cancelOrder, isInPayTransaction }) => ({
+    (
+      { currentOrderId, isInPayTransaction, isReadyToPay },
+      { cancelOrder },
+    ) => ({
+      isReadyToPay,
       children: isInPayTransaction ? (
         <React.Fragment>
           <CircularProgress />
